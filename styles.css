@@ -18,125 +18,147 @@
 
 /* Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.7;
-    color: var(--text-dark);
-    background: var(--background-light);
-    background-image: url('https://ayda-coaching-et-sophrologie.com/wp-content/uploads/2020/09/bg-logo-free-img.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 600px;
-    background-position: center;
-    background-blend-mode: multiply;
-    font-weight: 300;
-    font-size: 16px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header - Style zen et épuré */
+/* Header moderne et navigation épurée */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(248, 250, 248, 0.95);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
+    background: linear-gradient(90deg, #f8faf8 60%, #e8f0e8 100%);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 4px 24px rgba(107, 142, 107, 0.12);
     z-index: 1000;
-    border-bottom: 1px solid var(--accent-color);
+    border-bottom: 2px solid var(--primary-color);
+    border-radius: 0 0 24px 24px;
+    padding-bottom: 0.5rem;
 }
-
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0;
+    padding: 1.5rem 0 1rem 0;
 }
-
 .logo {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
 }
-
-.logo a {
-    text-decoration: none;
-    color: inherit;
-}
-
 .logo-content {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
 }
-
 .logo-image {
-    height: 70px;
+    height: 80px;
     width: auto;
     object-fit: contain;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(107, 142, 107, 0.15);
+    border: 2px solid var(--primary-color);
 }
-
-.logo-placeholder {
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .logo-text {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
-
 .logo h1 {
-    font-size: 2rem;
-    font-weight: 300;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    font-size: 2.3rem;
+    font-weight: 400;
+    background: linear-gradient(135deg, #6b8e6b 0%, #a8b5a8 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     margin: 0;
+    text-shadow: 0 2px 8px rgba(107, 142, 107, 0.08);
 }
-
 .logo span {
-    font-size: 0.9rem;
-    color: var(--text-medium);
-    margin-top: -4px;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+    margin-top: -2px;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
-
-/* Navigation */
-
-.nav-dropdown:hover .nav-arrow {
-    transform: rotate(180deg);
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    background: rgba(255,255,255,0.7);
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(107, 142, 107, 0.07);
+    padding: 0.5rem 1.5rem;
 }
-
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.9rem 1.4rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    border-radius: 14px;
+    transition: var(--transition);
+    font-size: 1.08rem;
+    background: transparent;
+    box-shadow: none;
+}
+.nav-link:hover {
+    background: linear-gradient(90deg, #e8f0e8 60%, #f8faf8 100%);
+    color: #4a8660;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 2px 12px rgba(107, 142, 107, 0.10);
+}
+.nav-link.active {
+    color: #4a8660;
+    font-weight: 600;
+    background: linear-gradient(90deg, #e8f0e8 60%, #f8faf8 100%);
+    box-shadow: 0 2px 12px rgba(107, 142, 107, 0.10);
+}
+.nav-link.active i {
+    color: #4a8660 !important;
+    opacity: 1 !important;
+}
+.nav-arrow {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
 .header-dropdown {
     position: absolute;
     top: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%) translateY(-10px);
     background: var(--white);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-xl);
-    padding: 0.5rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(107, 142, 107, 0.12);
+    padding: 0.7rem;
     min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    border: 1px solid var(--border-light);
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    border-radius: 12px;
+    transition: var(--transition);
+    margin-bottom: 0.25rem;
+}
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #6b8e6b 0%, #a8b5a8 100%);
+    color: var(--white);
+    transform: translateX(5px);
+}
+.dropdown-item.active {
+    background: linear-gradient(135deg, #e8f0e8 0%, #f8faf8 100%);
+    color: #4a8660;
+    font-weight: 500;
+}
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
