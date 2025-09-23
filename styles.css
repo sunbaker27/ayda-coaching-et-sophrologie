@@ -223,6 +223,10 @@ body {
     margin-top: 100px;
     min-height: calc(100vh - 100px);
     background: transparent;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
 
 /* Hero Section - Ambiance tranquillité */
@@ -363,9 +367,11 @@ body {
     grid-template-columns: 2fr 1fr;
     gap: 3rem;
     align-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
-}
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 
 .about-text h3 {
     font-size: 2.2rem;
