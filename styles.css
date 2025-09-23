@@ -1,4 +1,126 @@
 /* Variables CSS - Palette tranquillité */
+/* --- Structure mobile app-like --- */
+@media (max-width: 480px) {
+    body {
+        font-size: 17px;
+        background: var(--background-light);
+        padding-bottom: 60px;
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(107, 142, 107, 0.08);
+        border-bottom: 1px solid var(--accent-color);
+    }
+    .header-content {
+        flex-direction: row;
+        padding: 0;
+    }
+    .logo-image {
+        height: 40px;
+    }
+    .main-content {
+        margin-top: 60px;
+        padding: 0 4px;
+    }
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 1rem 0.5rem;
+        border-radius: 16px;
+        margin-bottom: 1rem;
+    }
+    .container {
+        max-width: 100vw;
+        padding: 0 4px;
+    }
+    /* Barre de navigation en bas façon app */
+    .mobile-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 56px;
+        background: var(--white);
+        box-shadow: 0 -2px 8px rgba(107, 142, 107, 0.08);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1001;
+        border-top: 1px solid var(--accent-color);
+    }
+    .mobile-nav a {
+        flex: 1;
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        padding: 0.5rem 0;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .mobile-nav a.active {
+        color: var(--secondary-color);
+        font-weight: 600;
+    }
+    /* Sections en colonne, cards arrondies */
+    section, .card, .objective-card, .activity-category, .destination-card {
+        border-radius: 18px;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1.5rem;
+        padding: 1.2rem 0.8rem;
+    }
+    /* Images bien visibles */
+    img, .gallery-photo, .service-photo {
+        width: 100%;
+        height: auto;
+        border-radius: 14px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+    /* Navigation hamburger si besoin */
+    .nav {
+        display: none;
+    }
+    .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 16px;
+        top: 10px;
+        font-size: 2rem;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+        z-index: 1002;
+    }
+    /* Overlay et modals en plein écran */
+    .overlay, .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: var(--white);
+        border-radius: 18px;
+        padding: 2rem 1rem;
+        max-width: 95vw;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
 :root {
     --primary-color: #6b8e6b;        /* Vert doux et apaisant */
     --secondary-color: #a8b5a8;       /* Vert pâle et serein */
