@@ -664,6 +664,22 @@ body {
     .page-header p {
         font-size: 1.1rem;
     }
+    .main-content,
+    .container,
+    .page-header,
+    section,
+    h1, h2, h3, h4, h5, h6,
+    p,
+    .btn,
+    .card,
+    .hero-section,
+    .logo-text {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
 }
 
 /* Additional styles for new pages */
