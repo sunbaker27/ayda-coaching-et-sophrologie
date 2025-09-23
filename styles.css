@@ -50,8 +50,24 @@
         position: fixed !important;
         left: 0 !important;
         right: 0 !important;
+        /* Par défaut, le menu principal est visible sur desktop */
+        .nav {
+            display: flex;
+        }
+        /* Par défaut, le menu Insta est caché sur desktop */
+        .mobile-insta-nav {
+            display: none;
+        }
         bottom: 0 !important;
         top: auto !important;
+            /* Masquer le menu principal sur mobile */
+            .nav {
+                display: none !important;
+            }
+            /* Afficher le menu Insta uniquement sur mobile */
+            .mobile-insta-nav {
+                display: flex !important;
+            }
         background: var(--white) !important;
         box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
         border-top: 1px solid #eee;
