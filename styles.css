@@ -3,6 +3,7 @@
 
             @media (max-width: 600px) {
                 /* Styles Instagram/app strictement pour mobile */
+
                 body {
                     background: var(--white) !important;
                     font-size: 15px !important;
@@ -105,6 +106,7 @@
                 }
             }
 body {
+
 
     background-color: red; /* Couleur de fond temporaire */
 }
