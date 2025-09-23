@@ -405,18 +405,54 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(248, 250, 248, 0.95);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(107, 142, 107, 0.08);
     z-index: 1000;
-    border-bottom: 1px solid var(--accent-color);
+    border-bottom: 3px solid #f4a261; /* Ligne orange */
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    padding: 0 32px;
+}
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0;
+    padding: 1.5rem 0 1.2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+/* Header - Titre AYDA */
+.header-title {
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #6b8e6b;
+    letter-spacing: 2px;
+    margin-bottom: 0.2rem;
+}
+.header-subtitle {
+    font-size: 1.1rem;
+    color: #888;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.header-nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+.header-nav a {
+    color: #222;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.header-nav a:hover {
+    color: #f4a261;
+}
 }
 
 .logo {
