@@ -56,7 +56,13 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(248, 250, 248, 0.95);
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
     backdrop-filter: blur(15px);
     box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
     z-index: 1000;
