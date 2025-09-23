@@ -244,9 +244,9 @@ body {
     position: relative;
     overflow: hidden;
     width: 100vw;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    margin-left: -50vw;
+    left: 50%;
+    right: 50%;
     box-sizing: border-box;
 }
 
