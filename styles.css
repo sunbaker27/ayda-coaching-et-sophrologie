@@ -231,6 +231,10 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 
 .hero-section::before {
