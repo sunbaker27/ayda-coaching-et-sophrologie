@@ -1,218 +1,5 @@
-/* Cacher le menu mobile Insta sur desktop */
-.mobile-insta-nav {
-    display: none;
-}
 
-@media (max-width: 600px) {
-    .mobile-insta-nav {
-        display: flex;
-    }
-}
-/* --- MENU MOBILE INSTA --- */
-@media (max-width: 600px) {
-    .header {
-        position: fixed !important;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.7;
-            color: var(--text-dark);
-            background: var(--background-light);
-            background-image: url('https://ayda-coaching-et-sophrologie.com/wp-content/uploads/2020/09/bg-logo-free-img.png');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: 600px;
-            background-position: center;
-            background-blend-mode: multiply;
-            font-weight: 300;
-            font-size: 16px;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        height: 56px !important;
-        background: #fff !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(248, 250, 248, 0.95);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
-            z-index: 1000;
-            border-bottom: 1px solid var(--accent-color);
-        border-bottom: 1px solid #eee !important;
-        z-index: 1000 !important;
-        display: flex !important;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 0;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-            display: flex;
-            flex-direction: column;
-    }
-    .mobile-insta-link {
-        flex: 1 1 0;
-            text-decoration: none;
-            color: inherit;
-        text-align: center;
-        color: var(--text-dark);
-        text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        font-size: 1.1rem;
-        display: flex;
-        flex-direction: column;
-            height: 70px;
-            width: auto;
-            object-fit: contain;
-        align-items: center;
-        justify-content: center;
-        gap: 2px;
-            font-size: 40px;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        padding: 0;
-        border: none;
-        background: none;
-            display: flex;
-            flex-direction: column;
-        transition: color 0.2s;
-    }
-    .mobile-insta-link:active, .mobile-insta-link.active {
-            font-size: 2rem;
-            font-weight: 300;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            margin: 0;
-        color: var(--primary-color);
-        font-weight: 600;
-    }
-            font-size: 0.9rem;
-            color: var(--text-medium);
-            margin-top: -4px;
-}
-.nav {
-        position: fixed !important;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        left: 0 !important;
-        right: 0 !important;
-        /* Par défaut, le menu principal est visible sur desktop */
-            position: relative;
-        .nav {
-            display: flex;
-        }
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.2rem;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-        /* Par défaut, le menu Insta est caché sur desktop */
-        .mobile-insta-nav {
-            display: none;
-            background: var(--background-light);
-            color: var(--primary-color);
-            transform: translateY(-1px);
-        }
 
-        /* Restauration du header, logo, container, sections pour desktop */
-            color: var(--primary-color);
-            font-weight: 600;
-            background: rgba(139, 69, 19, 0.1);
-        .header {
-            position: fixed;
-            top: 0;
-            color: var(--primary-color) !important;
-            opacity: 1 !important;
-            left: 0;
-            right: 0;
-            background: rgba(248, 250, 248, 0.95);
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
-            z-index: 1000;
-            transform: rotate(180deg);
-            border-bottom: 1px solid var(--accent-color);
-            height: auto;
-            display: block;
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            background: var(--white);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-xl);
-            padding: 0.5rem;
-            min-width: 220px;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            border: 1px solid var(--border-light);
-            padding: 0;
-        }
-        .logo {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.8rem 1rem;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 400;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            justify-content: flex-start;
-            width: auto;
-            margin: 0;
-            background: var(--background-light);
-            color: var(--primary-color);
-            padding: 0;
-        }
-        .logo-image {
-            color: var(--primary-color);
-            opacity: 0.7;
-            font-size: 1.1rem;
-            height: 70px;
-            width: auto;
-            object-fit: contain;
-            margin-right: 0;
-        }
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-        }
-        .logo h1 {
-            font-size: 2rem;
-            font-weight: 300;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
 
             @media (max-width: 600px) {
                 /* Styles Instagram/app strictement pour mobile */
@@ -225,47 +12,7 @@
                 .header {
                     position: fixed !important;
                     top: 0 !important;
-                    left: 0 !important;
-                    right: 0 !important;
-                    height: 56px !important;
-                    background: #fff !important;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
-                    border-bottom: 1px solid #eee !important;
-                    z-index: 1000 !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    padding: 0 !important;
-                }
-                .logo {
-                    display: flex !important;
-                    flex-direction: row !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    width: 100vw !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                }
-                .logo-image {
-                    height: 40px !important;
-                    width: 40px !important;
-                    margin-right: 8px !important;
-                }
-                .logo-text {
-                    display: flex !important;
-                    flex-direction: column !important;
-                    align-items: flex-start !important;
-                    justify-content: center !important;
-                }
-                .logo h1 {
-                    font-size: 1.1rem !important;
-                    font-weight: 500 !important;
-                    margin: 0 !important;
-                    letter-spacing: 1px !important;
-                    background: none !important;
-                    -webkit-text-fill-color: initial !important;
-                    color: var(--primary-color) !important;
-                }
+
                 .logo span {
                     font-size: 0.8rem !important;
                     color: var(--text-medium) !important;
@@ -358,6 +105,7 @@
                 }
             }
 body {
+
     background-color: red; /* Couleur de fond temporaire */
 }
 
@@ -465,7 +213,7 @@ body {
         display: none !important;
     }
 
-        /* FORMATIONS - Mobile */
+
         .formations-section, .formations-content, .formations-text {
             text-align: center !important;
             margin: 0 auto !important;
