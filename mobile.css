@@ -1,5 +1,14 @@
 /* Version mobile app-like dédiée */
 @media (max-width: 480px) {
+  .header > .container,
+  .header-content,
+  .logo-content {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0 8px;
+  }
   body {
     font-size: 17px;
     background: var(--background-light);
