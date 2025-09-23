@@ -1,3 +1,9 @@
+hr, .section-separator, .decor-separator {
+    border: none;
+    border-top: 1px solid var(--accent-color);
+    margin: 0.75rem 0;
+    opacity: 0.7;
+}
 /* Variables CSS - Palette tranquillité */
 :root {
     --primary-color: #6b8e6b;        /* Vert doux et apaisant */
@@ -237,6 +243,10 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 
 .hero-section::before {
@@ -3614,7 +3624,7 @@ body {
 
 @media (max-width: 480px) {
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 }
