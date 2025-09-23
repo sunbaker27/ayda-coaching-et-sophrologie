@@ -58,6 +58,70 @@
         .mobile-insta-nav {
             display: none;
         }
+
+        /* Restauration du header, logo, container, sections pour desktop */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(248, 250, 248, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 1px 10px rgba(107, 142, 107, 0.1);
+            z-index: 1000;
+            border-bottom: 1px solid var(--accent-color);
+            height: auto;
+            display: block;
+            padding: 0;
+        }
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: auto;
+            margin: 0;
+            padding: 0;
+        }
+        .logo-image {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 0;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-top: -4px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .hero-section, .about-section, .formations-section, .sejours-section, .services-section, .contact-section {
+            background: none;
+            box-shadow: none;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
+        }
         bottom: 0 !important;
         top: auto !important;
             /* Masquer le menu principal sur mobile */
