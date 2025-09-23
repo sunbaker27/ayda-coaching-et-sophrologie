@@ -41,6 +41,7 @@
     margin: 0 auto;
     padding: 0 8px;
     box-sizing: border-box;
+    width: 100vw;
   }
   body {
     min-width: 320px;
@@ -48,6 +49,7 @@
     margin: 0 auto;
     box-sizing: border-box;
     overflow-x: hidden;
+    width: 100vw;
   }
   /* Barre de navigation en bas façon app */
   .mobile-nav {
