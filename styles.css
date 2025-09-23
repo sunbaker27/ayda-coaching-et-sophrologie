@@ -122,49 +122,6 @@ body {
 }
 
 /* Navigation */
-.nav {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.nav-dropdown {
-    position: relative;
-}
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.2rem;
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-}
-
-.nav-link:hover {
-    background: var(--background-light);
-    color: var(--primary-color);
-    transform: translateY(-1px);
-}
-
-.nav-link.active {
-    color: var(--primary-color);
-    font-weight: 600;
-    background: rgba(139, 69, 19, 0.1);
-}
-
-.nav-link.active i {
-    color: var(--primary-color) !important;
-    opacity: 1 !important;
-}
-
-.nav-arrow {
-    font-size: 0.8rem;
-    transition: transform 0.3s ease;
-}
 
 .nav-dropdown:hover .nav-arrow {
     transform: rotate(180deg);
