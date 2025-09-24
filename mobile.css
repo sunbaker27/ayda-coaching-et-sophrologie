@@ -161,6 +161,11 @@
      padding: 0 !important;
      box-sizing: border-box;
      text-align: center !important;
+    }
+
+    /* Marge au-dessus des headers titres (sauf séjours désert) */
+    .page-header, .hero-section {
+     margin-top: 32px !important;
   }
   h1, h2, h3, h4, h5, h6, p {
     text-align: center;
