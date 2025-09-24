@@ -417,10 +417,16 @@ body {
 
 /* Page Headers */
 .page-header {
-    background: linear-gradient(135deg, #2c5f41 0%, #4a8660 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--white);
-    padding: 3rem 0 2rem;
+    padding: 5rem 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 
 .breadcrumb {
