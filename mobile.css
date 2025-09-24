@@ -108,6 +108,7 @@
     z-index: 1;
   }
   /* Carrousel objectifs Séjours Désert */
+  /* Carrousel raffiné et discret */
   .objectives-carousel {
     display: flex;
     align-items: center;
@@ -116,39 +117,96 @@
     max-width: 100vw;
     margin: 0 auto 2rem auto;
     position: relative;
+    overflow: visible;
+    background: none;
+    padding: 0;
   }
   .carousel-track {
-    display: flex;
-    overflow: hidden;
+    position: relative;
     width: 80vw;
-    min-height: 180px;
-    justify-content: center;
-    align-items: stretch;
+    min-height: 200px;
+    height: 220px;
+    display: block;
+    background: none;
+    border-radius: 14px;
+    box-shadow: none;
+    overflow: visible;
   }
   .carousel-slide {
-    min-width: 80vw;
-    max-width: 80vw;
-    flex-shrink: 0;
-    opacity: 0;
-    transition: opacity 0.4s;
-    display: none;
+    background: #f8faf8;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.07);
+    padding: 1.5rem 1rem 1.2rem 1rem;
+    text-align: center;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    min-height: 200px;
+    transition: box-shadow 0.4s, transform 0.4s, opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
+    display: block;
+    opacity: 0.5;
+    left: 0;
+    position: absolute;
+    top: 0;
   }
   .carousel-slide.active {
+    box-shadow: 0 4px 16px rgba(107,142,107,0.10);
+    font-size: 1.10rem;
+    font-weight: 500;
+    color: var(--primary-color);
     opacity: 1;
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .carousel-slide.prev {
+    left: -40vw;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  .carousel-slide.next {
+    left: 40vw;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .carousel-slide h3 {
+    font-size: 1.18rem;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+    color: var(--primary-color);
+    letter-spacing: 0.02em;
+  }
+  .carousel-slide i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
     display: block;
   }
   .carousel-btn {
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
+    background: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--accent-color);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
     cursor: pointer;
     margin: 0 8px;
-    box-shadow: 0 2px 8px rgba(107,142,107,0.12);
-    z-index: 2;
+    box-shadow: 0 1px 4px rgba(107,142,107,0.07);
+    z-index: 3;
+    transition: background 0.3s, color 0.2s, transform 0.2s;
+  }
+  .carousel-btn:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+    transform: scale(1.07);
   }
   /* Email plus petit sur mobile */
   .contact-email {
