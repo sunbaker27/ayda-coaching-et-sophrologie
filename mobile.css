@@ -11,8 +11,8 @@
 }
 @media (max-width: 480px) {
   .decorative-divider img {
-    width: 50px !important;
-    max-width: 50px !important;
+    width: 80px !important;
+    max-width: 80px !important;
     height: auto;
     margin: 0 auto 1.5rem auto;
     display: block;
