@@ -1,3 +1,18 @@
+@media (max-width: 480px) {
+  .decorative-divider img {
+    width: 50px !important;
+    max-width: 50px !important;
+    height: auto;
+    margin: 0 auto 1.5rem auto;
+    display: block;
+  }
+  .activities-carousel {
+    display: flex !important;
+  }
+  .activities-container {
+    display: none !important;
+  }
+}
   /* Carrousel unique activités raffiné et discret */
   .activities-carousel {
     display: flex;
