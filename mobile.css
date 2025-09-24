@@ -1,3 +1,14 @@
+/* Masquer le carrousel activités sur desktop */
+.activities-carousel.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .activities-carousel.mobile-only {
+    display: flex !important;
+    margin-bottom: 3.5rem !important;
+  }
+}
 @media (max-width: 480px) {
   .decorative-divider img {
     width: 50px !important;
@@ -8,6 +19,7 @@
   }
   .activities-carousel {
     display: flex !important;
+    margin-bottom: 3.5rem !important;
   }
   .activities-container {
     display: none !important;
