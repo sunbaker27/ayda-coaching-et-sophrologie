@@ -1,3 +1,50 @@
+  /* Carrousel peek effect */
+  .objectives-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 auto 2rem auto;
+    position: relative;
+    overflow: visible;
+  }
+  .carousel-track {
+    display: flex;
+    overflow: visible;
+    width: 80vw;
+    min-height: 180px;
+    justify-content: center;
+    align-items: stretch;
+    position: relative;
+  }
+  .carousel-slide {
+    min-width: 60vw;
+    max-width: 60vw;
+    flex-shrink: 0;
+    opacity: 0.5;
+    transform: scale(0.92) translateX(0);
+    transition: opacity 0.4s, transform 0.4s;
+    display: block;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .carousel-slide.active {
+    opacity: 1;
+    transform: scale(1.05) translateX(0);
+    z-index: 2;
+    pointer-events: auto;
+  }
+  .carousel-slide.prev {
+    transform: scale(0.92) translateX(-40vw);
+    opacity: 0.5;
+    z-index: 1;
+  }
+  .carousel-slide.next {
+    transform: scale(0.92) translateX(40vw);
+    opacity: 0.5;
+    z-index: 1;
+  }
   /* Carrousel objectifs Séjours Désert */
   .objectives-carousel {
     display: flex;

@@ -8,7 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showSlide(idx) {
         slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === idx);
+            slide.classList.remove('active', 'prev', 'next');
+            if (i === idx) {
+                slide.classList.add('active');
+            } else if (i === (idx - 1 + slides.length) % slides.length) {
+                slide.classList.add('prev');
+            } else if (i === (idx + 1) % slides.length) {
+                slide.classList.add('next');
+            }
         });
     }
 
