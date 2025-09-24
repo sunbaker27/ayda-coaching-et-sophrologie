@@ -1,3 +1,65 @@
+  /* Carrousel pro et élégant */
+  .objectives-carousel {
+    background: none;
+    padding: 0;
+  }
+  .carousel-track {
+    background: none;
+    border-radius: 24px;
+    box-shadow: none;
+  }
+  .carousel-slide {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(107,142,107,0.12);
+    padding: 2rem 1.2rem 1.5rem 1.2rem;
+    text-align: center;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.08rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    min-height: 220px;
+    transition: box-shadow 0.4s, transform 0.4s, opacity 0.4s;
+    display: block;
+  }
+  .carousel-slide.active {
+    box-shadow: 0 8px 32px rgba(107,142,107,0.18);
+    font-size: 1.13rem;
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+  .carousel-slide h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    color: var(--primary-color);
+    letter-spacing: 0.02em;
+  }
+  .carousel-slide i {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .carousel-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.7rem;
+    cursor: pointer;
+    margin: 0 10px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.12);
+    z-index: 2;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .carousel-btn:hover {
+    background: #4a5a4a;
+    transform: scale(1.08);
+  }
   /* Carrousel peek effect */
   .objectives-carousel {
     display: flex;
