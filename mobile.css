@@ -23,18 +23,18 @@
     overflow: visible;
   }
   .activities-carousel .carousel-slide {
-    background: #f8faf8;
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(107,142,107,0.07);
-    padding: 1.5rem 1rem 1.2rem 1rem;
-    text-align: center;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    text-align: left;
     color: var(--text-dark);
     font-family: 'Poppins', sans-serif;
     font-size: 1.05rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-    min-height: 180px;
-    transition: box-shadow 0.4s, transform 0.4s, opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
+    min-height: 120px;
+    transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
     display: block;
     opacity: 0.5;
     left: 0;
@@ -42,8 +42,8 @@
     top: 0;
   }
   .activities-carousel .carousel-slide.active {
-    box-shadow: 0 4px 16px rgba(107,142,107,0.10);
-    font-size: 1.10rem;
+    box-shadow: none;
+    font-size: 1.08rem;
     font-weight: 500;
     color: var(--primary-color);
     opacity: 1;
@@ -63,16 +63,18 @@
     z-index: 1;
   }
   .activities-carousel .carousel-slide h3 {
-    font-size: 1.18rem;
+    font-size: 1.12rem;
     font-weight: 500;
     margin-bottom: 0.7rem;
     color: var(--primary-color);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
+    text-align: left;
   }
   .activities-carousel .carousel-slide i {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: var(--primary-color);
-    margin-bottom: 0.3rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
     display: inline-block;
     vertical-align: middle;
   }
@@ -82,6 +84,8 @@
     margin: 0;
     text-align: left;
     font-size: 1rem;
+    background: none;
+    box-shadow: none;
   }
   .activities-carousel .activity-list li {
     margin-bottom: 0.5rem;
@@ -90,6 +94,10 @@
     gap: 0.5rem;
     color: var(--text-dark);
     font-size: 1rem;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
   }
   .activities-carousel .carousel-btn {
     background: #fff;
