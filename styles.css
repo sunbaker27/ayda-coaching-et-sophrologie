@@ -2208,7 +2208,7 @@ body {
 }
 
 .decorative-divider img {
-    max-width: 200px;
+    max-width: 50px;
     height: auto;
     opacity: 0.8;
 }
