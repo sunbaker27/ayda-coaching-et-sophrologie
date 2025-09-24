@@ -165,7 +165,7 @@
 
     /* Marge au-dessus des headers titres (sauf séjours désert) */
       .page-header, .hero-section {
-        margin-top: 56px !important;
+         margin-top: 80px !important;
   }
   h1, h2, h3, h4, h5, h6, p {
     text-align: center;
