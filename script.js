@@ -1,3 +1,39 @@
+// ===== CARROUSEL UNIQUE ACTIVITÉS SÉJOURS DÉSERT =====
+document.addEventListener('DOMContentLoaded', function() {
+    var carousel = document.querySelector('.activities-carousel');
+    if (carousel) {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
+        const prevBtn = carousel.querySelector('.carousel-btn.prev');
+        const nextBtn = carousel.querySelector('.carousel-btn.next');
+        let current = 0;
+
+        function showSlide(idx) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev', 'next');
+                if (i === idx) {
+                    slide.classList.add('active');
+                } else if (i === (idx - 1 + slides.length) % slides.length) {
+                    slide.classList.add('prev');
+                } else if (i === (idx + 1) % slides.length) {
+                    slide.classList.add('next');
+                }
+            });
+        }
+
+        if (prevBtn && nextBtn && slides.length) {
+            prevBtn.addEventListener('click', function() {
+                current = (current - 1 + slides.length) % slides.length;
+                showSlide(current);
+            });
+            nextBtn.addEventListener('click', function() {
+                current = (current + 1) % slides.length;
+                showSlide(current);
+            });
+            showSlide(current);
+        }
+    }
+});
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.activity-carousel').forEach(function(carousel) {
