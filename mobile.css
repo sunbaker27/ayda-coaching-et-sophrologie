@@ -1,3 +1,92 @@
+  /* Carrousel activités raffiné et discret */
+  .activity-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 auto 2rem auto;
+    position: relative;
+    overflow: visible;
+    background: none;
+    padding: 0;
+  }
+  .activity-carousel .carousel-track {
+    position: relative;
+    width: 80vw;
+    min-height: 120px;
+    height: 140px;
+    display: block;
+    background: none;
+    border-radius: 14px;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .activity-carousel .carousel-slide {
+    background: #f8faf8;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.07);
+    padding: 1rem 0.7rem 0.7rem 0.7rem;
+    text-align: center;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    min-height: 100px;
+    transition: box-shadow 0.4s, transform 0.4s, opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
+    display: block;
+    opacity: 0.5;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+  .activity-carousel .carousel-slide.active {
+    box-shadow: 0 4px 16px rgba(107,142,107,0.10);
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    opacity: 1;
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .activity-carousel .carousel-slide.prev {
+    left: -40vw;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  .activity-carousel .carousel-slide.next {
+    left: 40vw;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  .activity-carousel .carousel-slide i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .activity-carousel .carousel-btn {
+    background: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 0 6px;
+    box-shadow: 0 1px 4px rgba(107,142,107,0.07);
+    z-index: 3;
+    transition: background 0.3s, color 0.2s, transform 0.2s;
+  }
+  .activity-carousel .carousel-btn:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+    transform: scale(1.07);
+  }
   /* Carrousel pro et élégant */
   .objectives-carousel {
     background: none;
