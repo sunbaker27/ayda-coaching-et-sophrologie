@@ -104,7 +104,7 @@
   }
   /* Sections en colonne, cards arrondies */
   section, .card, .objective-card, .activity-category, .destination-card {
-    border-radius: 18px;
+    border-radius: 0 !important;
     box-shadow: var(--shadow-md);
     margin-bottom: 1.5rem;
     padding: 1.2rem 0.8rem;
@@ -113,7 +113,7 @@
   img, .gallery-photo, .service-photo {
     width: 100%;
     height: auto;
-    border-radius: 14px;
+    border-radius: 0 !important;
     object-fit: cover;
     margin-bottom: 1rem;
   }
