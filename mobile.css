@@ -1,3 +1,10 @@
+  /* Email plus petit sur mobile */
+  .contact-email {
+    font-size: 0.95rem !important;
+    word-break: break-all !important;
+    max-width: 95vw !important;
+    overflow-wrap: anywhere !important;
+  }
 /* Version mobile app-like dédiée */
 @media (max-width: 480px) {
   .header > .container,
