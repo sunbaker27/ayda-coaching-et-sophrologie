@@ -1,3 +1,29 @@
+// ===== CARROUSEL OBJECTIFS SÉJOURS DÉSERT =====
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.objectives-carousel .carousel-track');
+    const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
+    const prevBtn = document.querySelector('.objectives-carousel .carousel-btn.prev');
+    const nextBtn = document.querySelector('.objectives-carousel .carousel-btn.next');
+    let current = 0;
+
+    function showSlide(idx) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === idx);
+        });
+    }
+
+    if (prevBtn && nextBtn && slides.length) {
+        prevBtn.addEventListener('click', function() {
+            current = (current - 1 + slides.length) % slides.length;
+            showSlide(current);
+        });
+        nextBtn.addEventListener('click', function() {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        });
+        showSlide(current);
+    }
+});
 // ===== GESTION DES DROPDOWNS HEADER ET CONTENU =====
 
 // Variable pour suivre le dropdown actuellement ouvert

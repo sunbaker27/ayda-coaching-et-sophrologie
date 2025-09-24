@@ -1,3 +1,46 @@
+  /* Carrousel objectifs Séjours Désert */
+  .objectives-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 auto 2rem auto;
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    overflow: hidden;
+    width: 80vw;
+    min-height: 180px;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .carousel-slide {
+    min-width: 80vw;
+    max-width: 80vw;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: none;
+  }
+  .carousel-slide.active {
+    opacity: 1;
+    display: block;
+  }
+  .carousel-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0 8px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.12);
+    z-index: 2;
+  }
   /* Email plus petit sur mobile */
   .contact-email {
     font-size: 0.95rem !important;
