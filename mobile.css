@@ -5,8 +5,8 @@
 
 @media (max-width: 480px) {
   .activities-carousel.mobile-only {
-    display: flex !important;
-    margin-bottom: 3.5rem !important;
+  display: flex !important;
+  margin-bottom: 6rem !important;
   }
 }
 @media (max-width: 480px) {
