@@ -17,10 +17,6 @@
     margin: 0 auto 1.5rem auto;
     display: block;
   }
-  .activities-carousel {
-    display: flex !important;
-    margin-bottom: 3.5rem !important;
-  }
   .activities-container {
     display: none !important;
   }
