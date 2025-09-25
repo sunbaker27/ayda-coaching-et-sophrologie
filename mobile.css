@@ -35,34 +35,35 @@
     overflow: visible;
   }
   .activities-carousel .carousel-slide {
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 1.2rem 0.5rem 1rem 0.5rem;
-    text-align: left;
-    color: var(--text-dark);
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    min-height: 120px;
-    transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
-    display: block;
-    opacity: 0.5;
-    left: 0;
-    position: absolute;
-    top: 0;
+     background: transparent;
+     border-radius: 0;
+     box-shadow: none;
+     padding: 1.2rem 0.5rem 1rem 0.5rem;
+     text-align: left;
+     color: var(--text-dark);
+     font-family: 'Poppins', sans-serif;
+     font-size: 1.05rem;
+     font-weight: 400;
+     letter-spacing: 0.01em;
+     min-height: 120px;
+     transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
+     display: none;
+     opacity: 0.5;
+     left: 0;
+     position: absolute;
+     top: 0;
   }
   .activities-carousel .carousel-slide.active {
-    box-shadow: none;
-    font-size: 1.08rem;
-    font-weight: 500;
-    color: var(--primary-color);
-    opacity: 1;
-    left: 0;
-    z-index: 2;
-    position: absolute;
-    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+     box-shadow: none;
+     font-size: 1.08rem;
+     font-weight: 500;
+     color: var(--primary-color);
+     opacity: 1;
+     left: 0;
+     z-index: 2;
+     position: absolute;
+     animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+     display: block;
   }
   .activities-carousel .carousel-slide.prev {
     left: -40vw;
