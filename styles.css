@@ -26,6 +26,9 @@
 html {
     scroll-behavior: smooth;
 }
+[class~="activities-carousel"][class~="mobile-only"] {
+  display: none !important;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
