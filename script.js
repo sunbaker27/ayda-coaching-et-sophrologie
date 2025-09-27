@@ -18,6 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         slide.classList.add('next');
                     }
                 });
+                // Ajout d'une animation swipe
+                if (direction === 'left') {
+                    slides[idx].style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1)';
+                } else if (direction === 'right') {
+                    slides[idx].style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1) reverse';
+                } else {
+                    slides[idx].style.animation = '';
+                }
             }
 
             // Navigation tactile (swipe)
