@@ -80,16 +80,22 @@
   display: block;
   }
   .activities-carousel .carousel-slide.prev {
-     left: calc(50% - 40vw);
-     transform: translateX(-50%);
-     opacity: 0.3;
-     z-index: 1;
+  left: calc(50% - 40vw);
+  transform: translateX(-50%);
+  opacity: 0.4;
+  z-index: 1;
+  filter: blur(1px) grayscale(10%) brightness(0.96);
+  background: linear-gradient(135deg, #f8faf8 60%, #e8f0e8 100%);
+  border: 1.5px solid #f7cfa2;
   }
   .activities-carousel .carousel-slide.next {
-     left: calc(50% + 40vw);
-     transform: translateX(-50%);
-     opacity: 0.3;
-     z-index: 1;
+  left: calc(50% + 40vw);
+  transform: translateX(-50%);
+  opacity: 0.4;
+  z-index: 1;
+  filter: blur(1px) grayscale(10%) brightness(0.96);
+  background: linear-gradient(135deg, #f8faf8 60%, #e8f0e8 100%);
+  border: 1.5px solid #f7cfa2;
   }
   .activities-carousel .carousel-slide h3 {
   font-size: 1.18rem;
