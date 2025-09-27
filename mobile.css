@@ -35,10 +35,11 @@
     overflow: visible;
   }
   .activities-carousel .carousel-slide {
-     background: transparent;
-     border-radius: 0;
-     box-shadow: none;
-     padding: 1.2rem 0.5rem 1rem 0.5rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(107,142,107,0.13);
+  padding: 2rem 1.2rem 1.5rem 1.2rem;
+  margin: 0 auto;
      text-align: left;
      color: var(--text-dark);
      font-family: 'Poppins', sans-serif;
