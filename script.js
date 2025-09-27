@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (carousel) {
             const track = carousel.querySelector('.carousel-track');
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
-            const prevBtn = carousel.querySelector('.carousel-btn.prev');
-            const nextBtn = carousel.querySelector('.carousel-btn.next');
             let current = 0;
 
-            function showSlide(idx) {
+            function showSlide(idx, direction) {
                 slides.forEach((slide, i) => {
                     slide.classList.remove('active', 'prev', 'next');
                     if (i === idx) {
@@ -36,10 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (Math.abs(deltaX) > 40) {
                         if (deltaX < 0) {
                             current = (current + 1) % slides.length;
+                            showSlide(current, 'left');
                         } else {
                             current = (current - 1 + slides.length) % slides.length;
+                            showSlide(current, 'right');
                         }
-                        showSlide(current);
                     }
                     startX = null;
                 }
