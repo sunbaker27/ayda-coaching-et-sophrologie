@@ -57,26 +57,29 @@
      top: 0;
   }
   .activities-carousel .carousel-slide.active {
-     box-shadow: none;
-     font-size: 1.08rem;
-     font-weight: 500;
-     color: var(--primary-color);
-     opacity: 1;
-     left: 0;
-     z-index: 2;
-     position: absolute;
-     animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
-     display: block;
+      box-shadow: none;
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      opacity: 1;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      position: absolute;
+      animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+      display: block;
   }
   .activities-carousel .carousel-slide.prev {
-    left: -40vw;
-    opacity: 0.3;
-    z-index: 1;
+     left: calc(50% - 40vw);
+     transform: translateX(-50%);
+     opacity: 0.3;
+     z-index: 1;
   }
   .activities-carousel .carousel-slide.next {
-    left: 40vw;
-    opacity: 0.3;
-    z-index: 1;
+     left: calc(50% + 40vw);
+     transform: translateX(-50%);
+     opacity: 0.3;
+     z-index: 1;
   }
   .activities-carousel .carousel-slide h3 {
     font-size: 1.12rem;
