@@ -59,6 +59,7 @@
   .activities-carousel .carousel-slide.active {
   box-shadow: 0 12px 36px rgba(107,142,107,0.18), 0 2px 12px rgba(107,142,107,0.10);
   border-radius: 32px;
+  background: linear-gradient(135deg, #f8faf8 70%, #e8f0e8 100%, #fffbe6 120%);
   font-size: 1.12rem;
   font-weight: 600;
   color: var(--primary-color);
@@ -83,12 +84,13 @@
      z-index: 1;
   }
   .activities-carousel .carousel-slide h3 {
-    font-size: 1.12rem;
-    font-weight: 500;
-    margin-bottom: 0.7rem;
-    color: var(--primary-color);
-    letter-spacing: 0.01em;
-    text-align: left;
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  color: var(--primary-color);
+  letter-spacing: 0.01em;
+  text-align: left;
+  text-shadow: 0 0 8px rgba(107,142,107,0.12), 0 0 2px #fffbe6;
   }
   .activities-carousel .carousel-slide i {
     font-size: 1.1rem;
