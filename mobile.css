@@ -127,13 +127,22 @@
   transition: filter 0.3s, text-shadow 0.3s;
   }
   .activities-carousel .activity-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-    font-size: 1rem;
-    background: none;
-    box-shadow: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-size: 1rem;
+  background: none;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeInList 0.7s cubic-bezier(.4,0,.2,1) 0.2s forwards;
+@keyframes fadeInList {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
   }
   .activities-carousel .activity-list li {
     margin-bottom: 0.5rem;
