@@ -135,7 +135,6 @@
   opacity: 0;
   transform: translateY(16px);
   animation: fadeInList 0.7s cubic-bezier(.4,0,.2,1) 0.2s forwards;
-  animation: fadeInList 0.7s cubic-bezier(.4,0,.2,1) 0.2s forwards;
 @keyframes fadeInList {
   to {
     opacity: 1;
