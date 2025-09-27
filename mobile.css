@@ -50,7 +50,7 @@
      letter-spacing: 0.01em;
   min-height: 100px;
      transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
-     display: none;
+  display: block;
      opacity: 0.5;
      left: 0;
      position: absolute;
