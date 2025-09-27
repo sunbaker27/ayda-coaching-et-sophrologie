@@ -1,3 +1,8 @@
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  text-shadow: 0 0 8px #f7cfa2, 0 0 2px #fffbe6;
+  filter: drop-shadow(0 2px 6px rgba(247,207,162,0.18));
+  transition: filter 0.3s, text-shadow 0.3s;
 /* Masquer le carrousel activités sur desktop */
 .activities-carousel.mobile-only {
   display: none !important;
@@ -107,12 +112,19 @@
   text-shadow: 0 0 8px rgba(107,142,107,0.12), 0 0 2px #fffbe6;
   }
   .activities-carousel .carousel-slide i {
-    font-size: 1.1rem;
-    color: var(--primary-color);
-    margin-right: 0.5rem;
-    margin-bottom: 0;
-    display: inline-block;
-    vertical-align: middle;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+.activities-carousel .carousel-slide.active i {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  text-shadow: 0 0 8px #f7cfa2, 0 0 2px #fffbe6;
+  filter: drop-shadow(0 2px 6px rgba(247,207,162,0.18));
+  transition: filter 0.3s, text-shadow 0.3s;
   }
   .activities-carousel .activity-list {
     list-style: none;
