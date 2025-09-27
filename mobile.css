@@ -60,6 +60,14 @@
   box-shadow: 0 12px 36px rgba(107,142,107,0.18), 0 2px 12px rgba(107,142,107,0.10);
   border-radius: 32px;
   background: linear-gradient(135deg, #f8faf8 70%, #e8f0e8 100%, #fffbe6 120%);
+  border: 2.5px solid #f7cfa2;
+/* Effet d'élévation au touch/hover sur la carte active */
+.activities-carousel .carousel-slide.active:active,
+.activities-carousel .carousel-slide.active:hover {
+  box-shadow: 0 20px 48px rgba(107,142,107,0.22), 0 6px 32px rgba(247,207,162,0.18);
+  transform: translateX(-50%) scale(1.08);
+  border-color: #f7cfa2;
+}
   font-size: 1.12rem;
   font-weight: 600;
   color: var(--primary-color);
