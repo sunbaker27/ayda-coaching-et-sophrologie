@@ -134,6 +134,8 @@
   font-size: 1rem;
   background: none;
   box-shadow: none;
+}
+.activities-carousel .carousel-slide.active .activity-list {
   opacity: 0;
   transform: translateY(16px);
   animation: fadeInList 0.7s cubic-bezier(.4,0,.2,1) 0.2s forwards;
