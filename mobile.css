@@ -40,7 +40,7 @@
   box-shadow: 0 8px 32px rgba(107,142,107,0.18), 0 1.5px 8px rgba(107,142,107,0.10);
   border: 1.5px solid var(--accent-color);
   padding: 1.2rem 1.2rem 1.2rem 1.2rem;
-  margin: 2.5rem auto 5.5rem auto;
+  margin: 0.8rem auto 5.5rem auto;
   transition: box-shadow 0.5s, border 0.4s, background 0.5s, opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1), transform 0.4s;
      text-align: left;
      color: var(--text-dark);
