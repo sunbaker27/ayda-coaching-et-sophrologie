@@ -25,9 +25,9 @@
   /* .activities-carousel { ... } supprimé pour éviter l'affichage sur desktop */
   .activities-carousel .carousel-track {
     position: relative;
-    width: 80vw;
-    min-height: 180px;
-    height: 220px;
+      width: 90vw;
+      min-height: 320px;
+      height: 370px;
     display: block;
     background: none;
     border-radius: 14px;
@@ -48,7 +48,7 @@
      font-size: 1.05rem;
      font-weight: 400;
      letter-spacing: 0.01em;
-  min-height: 100px;
+    min-height: 220px;
      transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
   display: block;
      opacity: 0.5;
