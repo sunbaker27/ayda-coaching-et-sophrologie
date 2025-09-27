@@ -57,17 +57,18 @@
      top: 0;
   }
   .activities-carousel .carousel-slide.active {
-      box-shadow: none;
-      font-size: 1.08rem;
-      font-weight: 500;
-      color: var(--primary-color);
-      opacity: 1;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      position: absolute;
-      animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
-      display: block;
+  box-shadow: 0 12px 36px rgba(107,142,107,0.18), 0 2px 12px rgba(107,142,107,0.10);
+  border-radius: 32px;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  opacity: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  position: absolute;
+  animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+  display: block;
   }
   .activities-carousel .carousel-slide.prev {
      left: calc(50% - 40vw);
