@@ -605,8 +605,19 @@
     width: 100%;
     height: auto;
     border-radius: 0 !important;
-    object-fit: cover;
+      object-fit: cover;
     margin-bottom: 1rem;
+  }
+  @media (max-width: 480px) {
+    .destination-card img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      display: block;
+      margin: 0 auto 1rem auto;
+      background: #fff;
+      border-radius: 0 !important;
+    }
   }
   /* Navigation hamburger si besoin */
   .nav {
