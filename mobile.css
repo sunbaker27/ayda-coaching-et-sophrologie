@@ -1,4 +1,12 @@
 @media (max-width: 480px) {
+  .destinations-carousel .carousel-slide {
+    display: none;
+  }
+  .destinations-carousel .carousel-slide.active {
+    display: block;
+  }
+}
+@media (max-width: 480px) {
   .destinations-grid {
     display: none !important;
   }
