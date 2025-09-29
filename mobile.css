@@ -39,6 +39,7 @@
     display: block;
     margin: 0;
     border-radius: 0 !important;
+    object-fit: contain !important;
   }
   .destinations-carousel .carousel-slide h3,
   .destinations-carousel .carousel-slide p {
