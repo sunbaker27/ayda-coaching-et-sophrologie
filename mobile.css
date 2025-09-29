@@ -6,6 +6,20 @@
     display: block !important;
     width: 100vw;
     margin: 0 auto 2rem auto;
+    text-align: center;
+  }
+  .destinations-carousel .carousel-track {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    overflow: hidden;
+  }
+  .destinations-carousel .carousel-slide {
+    margin: 0 auto;
+    max-width: 90vw;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 /* Les propriétés ci-dessus sont déplacées dans le sélecteur .activities-carousel .carousel-slide.active i plus bas */
