@@ -1,4 +1,24 @@
 @media (max-width: 480px) {
+  .destinations-carousel .carousel-slide.active {
+    overflow: visible !important;
+    position: static !important;
+  }
+  .destinations-carousel .carousel-slide.active h3,
+  .destinations-carousel .carousel-slide.active p {
+    display: block !important;
+    position: static !important;
+    color: #222 !important;
+    background: #fff !important;
+    padding: 1rem 0.5rem 0.5rem 0.5rem !important;
+    margin: 0 auto 1rem auto !important;
+    font-size: 1.15rem !important;
+    text-align: center !important;
+    border-radius: 0 0 12px 12px;
+    z-index: 2 !important;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.07);
+  }
+}
+@media (max-width: 480px) {
   .destinations-carousel .carousel-slide.active h3,
   .destinations-carousel .carousel-slide.active p {
     display: block !important;
