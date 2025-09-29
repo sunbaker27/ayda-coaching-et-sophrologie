@@ -1,3 +1,37 @@
+// ===== CARROUSEL DESTINATIONS MOBILE =====
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.matchMedia('(max-width: 480px)').matches) {
+        var carousel = document.querySelector('.destinations-carousel');
+        if (carousel) {
+            const track = carousel.querySelector('.carousel-track');
+            const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
+            const prevBtn = carousel.querySelector('.carousel-btn.prev');
+            const nextBtn = carousel.querySelector('.carousel-btn.next');
+            let current = 0;
+
+            function showSlide(idx) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === idx) {
+                        slide.classList.add('active');
+                    }
+                });
+            }
+
+            if (prevBtn && nextBtn && slides.length) {
+                prevBtn.addEventListener('click', function() {
+                    current = (current - 1 + slides.length) % slides.length;
+                    showSlide(current);
+                });
+                nextBtn.addEventListener('click', function() {
+                    current = (current + 1) % slides.length;
+                    showSlide(current);
+                });
+            }
+            showSlide(current);
+        }
+    }
+});
 // ===== CARROUSEL UNIQUE ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
     if (window.matchMedia('(max-width: 480px)').matches) {
