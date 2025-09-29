@@ -40,6 +40,20 @@
     margin: 0;
     border-radius: 0 !important;
   }
+  .destinations-carousel .carousel-slide h3,
+  .destinations-carousel .carousel-slide p {
+    display: block;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+    margin: 0 auto 1rem auto;
+    padding: 0 1rem;
+    text-align: center;
+    color: var(--text-dark);
+    background: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
 }
 /* Les propriétés ci-dessus sont déplacées dans le sélecteur .activities-carousel .carousel-slide.active i plus bas */
 /* Masquer le carrousel activités sur desktop */
