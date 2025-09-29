@@ -1,3 +1,13 @@
+@media (max-width: 480px) {
+  .destinations-grid {
+    display: none !important;
+  }
+  .destinations-carousel {
+    display: block !important;
+    width: 100vw;
+    margin: 0 auto 2rem auto;
+  }
+}
 /* Les propriétés ci-dessus sont déplacées dans le sélecteur .activities-carousel .carousel-slide.active i plus bas */
 /* Masquer le carrousel activités sur desktop */
 .activities-carousel.mobile-only {
