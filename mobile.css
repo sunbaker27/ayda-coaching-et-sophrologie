@@ -1,3 +1,8 @@
+  .desert-testimonials, .desert-testimonials .container {
+    background: transparent !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
   /* Animation de fondu et zoom sur le slide actif */
   @keyframes swipeFadeZoom {
     0% { opacity: 0; transform: scale(0.97) translateX(60vw); }
