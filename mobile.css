@@ -1,3 +1,56 @@
+  /* Animation de fondu et zoom sur le slide actif */
+  @keyframes swipeFadeZoom {
+    0% { opacity: 0; transform: scale(0.97) translateX(60vw); }
+    60% { opacity: 1; transform: scale(1.05) translateX(-5vw); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .destinations-carousel .carousel-slide.active {
+    box-shadow: 0 8px 24px rgba(107,142,107,0.18), 0 2px 8px rgba(107,142,107,0.07);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff 80%, #e8f0e8 100%);
+    transform: scale(1.05);
+    transition: box-shadow 0.4s, transform 0.4s;
+    animation: swipeFadeZoom 0.5s cubic-bezier(.4,0,.2,1);
+    z-index: 2;
+  }
+  .destinations-carousel .carousel-slide img {
+    border-radius: 18px 18px 0 0 !important;
+    box-shadow: 0 4px 16px rgba(107,142,107,0.10);
+    transition: transform 0.4s;
+  }
+  .destinations-carousel .carousel-slide.active img {
+    transform: scale(1.04);
+  }
+  .destinations-carousel .carousel-slide h3,
+  .destinations-carousel .carousel-slide p {
+    background: rgba(255,255,255,0.97) !important;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.10);
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 2px 8px rgba(107,142,107,0.10);
+  }
+  /* Indicateurs de position du carrousel */
+  .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0;
+  position: relative;
+  top: -10px;
+  z-index: 3;
+  }
+  .carousel-indicators .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #a8b5a8;
+    opacity: 0.5;
+    transition: background 0.3s, opacity 0.3s;
+  }
+  .carousel-indicators .dot.active {
+    background: #6b8e6b;
+    opacity: 1;
+  }
   /* Animation swipe pour le carrousel */
   @keyframes swipeIn {
     0% { transform: translateX(60vw) scale(0.95); opacity: 0.5; }
@@ -21,7 +74,7 @@
     background: rgba(255,255,255,0.95) !important;
     border-radius: 0 0 18px 18px;
     box-shadow: 0 2px 8px rgba(107,142,107,0.10);
-    margin-bottom: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
   }
 @media (max-width: 480px) {
   .destinations-carousel .carousel-slide.active {
