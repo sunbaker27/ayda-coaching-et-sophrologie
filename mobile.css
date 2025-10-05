@@ -1,3 +1,28 @@
+  /* Animation swipe pour le carrousel */
+  @keyframes swipeIn {
+    0% { transform: translateX(60vw) scale(0.95); opacity: 0.5; }
+    60% { transform: translateX(-5vw) scale(1.03); opacity: 1; }
+    100% { transform: translateX(0) scale(1); opacity: 1; }
+  }
+  .destinations-carousel .carousel-slide.active {
+    box-shadow: 0 8px 24px rgba(107,142,107,0.18), 0 2px 8px rgba(107,142,107,0.07);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff 80%, #e8f0e8 100%);
+    transform: scale(1.03);
+    transition: box-shadow 0.4s, transform 0.4s;
+    animation: swipeIn 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .destinations-carousel .carousel-slide img {
+    border-radius: 18px 18px 0 0 !important;
+    box-shadow: 0 4px 16px rgba(107,142,107,0.10);
+  }
+  .destinations-carousel .carousel-slide h3,
+  .destinations-carousel .carousel-slide p {
+    background: rgba(255,255,255,0.95) !important;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 2px 8px rgba(107,142,107,0.10);
+    margin-bottom: 1.5rem !important;
+  }
 @media (max-width: 480px) {
   .destinations-carousel .carousel-slide.active {
     overflow: visible !important;

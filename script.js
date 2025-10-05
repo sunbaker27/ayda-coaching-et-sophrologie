@@ -7,11 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
             let current = 0;
 
-            function showSlide(idx) {
+            function showSlide(idx, direction) {
                 slides.forEach((slide, i) => {
                     slide.classList.remove('active');
+                    slide.style.animation = '';
                     if (i === idx) {
                         slide.classList.add('active');
+                        if (direction === 'left') {
+                            slide.style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1)';
+                        } else if (direction === 'right') {
+                            slide.style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1) reverse';
+                        }
                     }
                 });
             }
@@ -30,10 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (Math.abs(deltaX) > 40) {
                         if (deltaX < 0) {
                             current = (current + 1) % slides.length;
-                            showSlide(current);
+                            showSlide(current, 'left');
                         } else {
                             current = (current - 1 + slides.length) % slides.length;
-                            showSlide(current);
+                            showSlide(current, 'right');
                         }
                     }
                     startX = null;
