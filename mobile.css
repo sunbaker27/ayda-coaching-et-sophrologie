@@ -10,7 +10,7 @@
     color: #222 !important;
     background: #fff !important;
     padding: 1rem 0.5rem 0.5rem 0.5rem !important;
-    margin: 0 auto 1rem auto !important;
+    margin: 2rem auto 1rem auto !important;
     font-size: 1.15rem !important;
     text-align: center !important;
     border-radius: 0 0 12px 12px;
@@ -90,6 +90,8 @@
     margin: 0;
     border-radius: 0 !important;
     object-fit: contain !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
   .destinations-carousel .carousel-slide h3,
   .destinations-carousel .carousel-slide p {

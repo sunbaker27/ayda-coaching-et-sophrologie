@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (carousel) {
             const track = carousel.querySelector('.carousel-track');
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
-            const prevBtn = carousel.querySelector('.carousel-btn.prev');
-            const nextBtn = carousel.querySelector('.carousel-btn.next');
             let current = 0;
 
             function showSlide(idx) {
@@ -18,16 +16,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            if (prevBtn && nextBtn && slides.length) {
-                prevBtn.addEventListener('click', function() {
-                    current = (current - 1 + slides.length) % slides.length;
-                    showSlide(current);
-                });
-                nextBtn.addEventListener('click', function() {
-                    current = (current + 1) % slides.length;
-                    showSlide(current);
-                });
-            }
+            // Navigation tactile (swipe)
+            let startX = null;
+            track.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    startX = e.touches[0].clientX;
+                }
+            });
+            track.addEventListener('touchend', function(e) {
+                if (startX !== null && e.changedTouches.length === 1) {
+                    let endX = e.changedTouches[0].clientX;
+                    let deltaX = endX - startX;
+                    if (Math.abs(deltaX) > 40) {
+                        if (deltaX < 0) {
+                            current = (current + 1) % slides.length;
+                            showSlide(current);
+                        } else {
+                            current = (current - 1 + slides.length) % slides.length;
+                            showSlide(current);
+                        }
+                    }
+                    startX = null;
+                }
+            });
             showSlide(current);
         }
     }
