@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 trackX = offset;
                 if (animFrame) cancelAnimationFrame(animFrame);
                 if (animate) {
-                    track.style.transition = 'transform 0.35s cubic-bezier(.22,.9,.35,1)';
+                    track.style.transition = 'transform 0.28s cubic-bezier(.22,.9,.35,1)';
                 } else {
                     track.style.transition = 'none';
                 }
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const flickThreshold = 0.02; // px per ms
             if (Math.abs(velocity) > flickThreshold) {
                 // Apply momentum with simpler easing and then snap to center
-                const deceleration = 0.0009; // px per ms^2
+                const deceleration = 0.0006; // px per ms^2 (softer slowdown)
                 let v = velocity * 1000; // px/s
                 const start = performance.now();
                 const baseX = trackX;
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     track.style.transition = 'none';
                     track.style.transform = `translate3d(${baseX + distance}px,0,0)`;
                     // stop condition: velocity falls below threshold
-                    if (Math.abs(v) > 0.5 && Math.abs(distance) < 10000) {
+                    if (Math.abs(v) > 0.4 && Math.abs(distance) < 10000) {
                         requestAnimationFrame(momentumFrame);
                     } else {
                         // snap to nearest slide centered
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 requestAnimationFrame(momentumFrame);
             } else {
                 // small movement -> change slide based on delta, else snap to nearest
-                if (Math.abs(delta) > 40) {
+                if (Math.abs(delta) > 30) {
                     if (delta < 0) goToIndex(current + 1);
                     else goToIndex(current - 1);
                 } else {
