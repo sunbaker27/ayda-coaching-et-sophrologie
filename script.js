@@ -6,6 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const track = carousel.querySelector('.carousel-track');
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
             let current = 0;
+
+            // Create indicators (small dots) like destinations
+            let indicatorsActivities = document.createElement('div');
+            indicatorsActivities.className = 'carousel-indicators';
+            slides.forEach((_, i) => {
+                let dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    current = i;
+                    showSlide(current);
+                });
+                indicatorsActivities.appendChild(dot);
+            });
+            carousel.appendChild(indicatorsActivities);
             // Ajout des indicateurs
             let indicators = document.createElement('div');
             indicators.className = 'carousel-indicators';
@@ -89,6 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         slide.classList.add('next');
                     }
                 });
+                // Update indicators
+                if (carousel.querySelector('.carousel-indicators')) {
+                    let dots = carousel.querySelectorAll('.carousel-indicators .dot');
+                    dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+                }
                 // Ajout d'une animation swipe
                 if (direction === 'left') {
                     slides[idx].style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1)';
