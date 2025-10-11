@@ -224,6 +224,8 @@
   padding-top: 0.6rem !important;
   padding-bottom: 0.6rem !important;
   overflow: hidden !important; /* viewport for transform-based carousel */
+  position: relative; /* container for absolute indicators */
+  padding-bottom: 3rem !important; /* space for fixed indicators */
   }
 }
 @media (max-width: 480px) {
@@ -289,6 +291,12 @@
     gap: 0.45rem;
     justify-content: center;
     margin-top: 0.9rem;
+    /* make indicators fixed relative to the carousel so they don't move when track translates */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8px;
+    z-index: 6;
   }
   .activities-carousel .carousel-indicators .dot {
     width: 8px;
