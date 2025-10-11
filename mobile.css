@@ -45,7 +45,15 @@
   }
 
 @media (max-width: 480px) {
-  .destinations-carousel .carousel-indicators,
+  /* Keep destinations indicators static (where they are in Taghit); pin activities indicators to bottom */
+  .destinations-carousel .carousel-indicators {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: -10px; /* restore the visual offset used in Taghit */
+    z-index: 3;
+  }
+
   .activities-carousel .carousel-indicators {
     position: absolute;
     left: 50%;
