@@ -238,10 +238,11 @@
   display: flex !important;
   margin-bottom: 2.4rem !important;
   padding-top: 0.6rem !important;
-  padding-bottom: 0.6rem !important;
+  /* keep only the larger bottom padding to reserve space for indicators */
+  padding-bottom: 3.2rem !important;
   overflow: hidden !important; /* viewport for transform-based carousel */
   position: relative; /* container for absolute indicators */
-  padding-bottom: 3rem !important; /* space for fixed indicators */
+  /* space for fixed indicators */
   }
 }
 @media (max-width: 480px) {
@@ -263,7 +264,7 @@
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-start; /* align to top to avoid bottom white gap */
     gap: 0.6rem;
     will-change: transform;
     transition: transform 0.28s cubic-bezier(.22,.9,.35,1);
@@ -280,7 +281,7 @@
     box-shadow: 0 6px 14px rgba(107,142,107,0.10);
     border: 1px solid rgba(168,181,168,0.6);
     padding: 0.9rem 0.9rem;
-    margin: 0 0.45rem;
+  margin: 0 0.45rem 0 0.45rem;
     flex: 0 0 78%; /* slightly smaller for visible peek */
     max-width: 78%;
     box-sizing: border-box;
