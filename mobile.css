@@ -44,6 +44,16 @@
   top: -10px;
   z-index: 3;
   }
+
+@media (max-width: 480px) {
+  .destinations-carousel .carousel-indicators {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8px;
+    z-index: 6;
+  }
+}
   .carousel-indicators .dot {
     width: 10px;
     height: 10px;
@@ -166,6 +176,8 @@
     width: 100vw;
     margin: 0 auto 0.2rem auto;
     text-align: center;
+    position: relative; /* container for absolute indicators */
+    padding-bottom: 3rem; /* space for fixed indicators */
   }
   .destinations-carousel .carousel-track {
     display: flex;
