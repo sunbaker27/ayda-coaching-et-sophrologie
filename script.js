@@ -167,21 +167,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // Touch drag
         let startClientX = 0;
         let lastClientX = 0;
+        let lastTime = 0;
         let isDragging = false;
+        let velocity = 0;
 
         track.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
             startClientX = e.touches[0].clientX;
             lastClientX = startClientX;
+            lastTime = performance.now();
             isDragging = true;
+            velocity = 0;
             track.style.transition = 'none';
         }, { passive: true });
 
         track.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             const x = e.touches[0].clientX;
+            const now = performance.now();
+            const dt = Math.max(1, now - lastTime);
             const dx = x - lastClientX;
+            // velocity in px/ms
+            velocity = dx / dt;
             lastClientX = x;
+            lastTime = now;
             trackX += dx;
             if (!animFrame) animFrame = requestAnimationFrame(updateTrack);
         }, { passive: true });
@@ -191,13 +200,49 @@ document.addEventListener('DOMContentLoaded', function() {
             isDragging = false;
             const endX = lastClientX;
             const delta = endX - startClientX;
-            // threshold
-            if (Math.abs(delta) > 40) {
-                if (delta < 0) goToIndex(current + 1);
-                else goToIndex(current - 1);
+            // If there was a flick (velocity), apply inertia
+            const flickThreshold = 0.02; // px per ms
+            if (Math.abs(velocity) > flickThreshold) {
+                // Apply momentum
+                const deceleration = 0.0008; // px per ms^2
+                let v = velocity * 1000; // px/s
+                const dir = v > 0 ? 1 : -1;
+                const start = performance.now();
+
+                function momentumFrame(now) {
+                    const t = now - start;
+                    // distance = v0 * t - 0.5 * a * t^2
+                    const distance = v * t / 1000 - 0.5 * deceleration * t * t;
+                    track.style.transition = 'none';
+                    track.style.transform = `translate3d(${trackX + distance}px,0,0)`;
+                    // stop condition
+                    if (Math.abs(v) > 0.1 && Math.abs(distance) < 10000) {
+                        requestAnimationFrame(momentumFrame);
+                    } else {
+                        // snap to nearest
+                        // compute approximate index
+                        const slideW = slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(slides[0]).marginRight || 0);
+                        const currentOffset = (trackX + distance);
+                        let idx = Math.round(Math.abs(currentOffset) / slideW);
+                        goToIndex(idx);
+                    }
+                }
+                requestAnimationFrame(momentumFrame);
             } else {
-                goToIndex(current);
+                // threshold
+                if (Math.abs(delta) > 40) {
+                    if (delta < 0) goToIndex(current + 1);
+                    else goToIndex(current - 1);
+                } else {
+                    goToIndex(current);
+                }
             }
+        });
+
+        // handle resize to recalc slide widths
+        window.addEventListener('resize', () => {
+            // Recalculate track position based on current index
+            setTimeout(() => goToIndex(current, false), 80);
         });
 
         // init
