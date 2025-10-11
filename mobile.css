@@ -82,6 +82,24 @@
   margin-bottom: 0.2rem !important;
   }
 @media (max-width: 480px) {
+  /* More vertical breathing room for carousels on mobile */
+  .destinations-carousel,
+  .activities-carousel,
+  .activity-carousel,
+  .testimonials-carousel {
+    margin-top: 1.2rem !important;
+    margin-bottom: 1.2rem !important;
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+  }
+
+  /* Slightly increase space for active slide visual emphasis */
+  .destinations-carousel .carousel-slide.active,
+  .activities-carousel .carousel-slide.active {
+    margin-top: 0.6rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+
   .destinations-carousel .carousel-slide.active {
     overflow: visible !important;
     position: static !important;
@@ -331,7 +349,6 @@
     transform: translateY(0);
   }
 }
-  }
   .activities-carousel .activity-list li {
     margin-bottom: 0.5rem;
     display: flex;
