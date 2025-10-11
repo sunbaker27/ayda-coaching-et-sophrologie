@@ -219,52 +219,47 @@
   /* .activities-carousel { ... } supprimé pour éviter l'affichage sur desktop */
   .activities-carousel .carousel-track {
     position: relative;
-      width: 90vw;
-      min-height: 320px;
-      height: 370px;
-    display: block;
-    background: none;
-    border-radius: 14px;
-    box-shadow: none;
-    overflow: visible;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    will-change: transform;
+    transition: transform 0.35s cubic-bezier(.22,.9,.35,1);
+    touch-action: pan-y;
+    overflow: hidden;
   }
   .activities-carousel .carousel-slide {
-  background: linear-gradient(135deg, #f8faf8 80%, #e8f0e8 100%);
-  border-radius: 22px;
-  box-shadow: 0 8px 32px rgba(107,142,107,0.18), 0 1.5px 8px rgba(107,142,107,0.10);
-  border: 1.5px solid var(--accent-color);
-  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
-    margin: 0 auto 0 auto;
-  transition: box-shadow 0.5s, border 0.4s, background 0.5s, opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1), transform 0.4s;
-     text-align: left;
-     color: var(--text-dark);
-     font-family: 'Poppins', sans-serif;
-     font-size: 1.05rem;
-     font-weight: 400;
-     letter-spacing: 0.01em;
-    min-height: 220px;
-     transition: opacity 0.4s, left 0.5s cubic-bezier(.4,0,.2,1);
-  display: block;
-     opacity: 0.5;
-     left: 0;
-     position: absolute;
-     top: 0;
+    background: linear-gradient(135deg, #f8faf8 80%, #e8f0e8 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(107,142,107,0.12);
+    border: 1px solid var(--accent-color);
+    padding: 0.9rem 1rem;
+    margin: 0 0.6rem;
+    flex: 0 0 86%; /* shows a peek of adjacent slides */
+    max-width: 86%;
+    box-sizing: border-box;
+    text-align: left;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    min-height: 180px;
+    display: block;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
   .activities-carousel .carousel-slide.active {
-    box-shadow: 0 12px 36px rgba(107,142,107,0.18), 0 2px 12px rgba(107,142,107,0.10);
-    border-radius: 32px;
-    background: linear-gradient(135deg, #f8faf8 70%, #e8f0e8 100%, #fffbe6 120%);
-    border: 2.5px solid #f7cfa2;
-    font-size: 1.12rem;
+    box-shadow: 0 14px 36px rgba(107,142,107,0.18);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff 80%, #e8f0e8 100%);
+    border: 1.5px solid #f7cfa2;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--primary-color);
     opacity: 1;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    position: absolute;
-    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
-    display: block;
+    z-index: 3;
+    transform: scale(1.03);
   }
   .activities-carousel .carousel-slide.active:active,
   .activities-carousel .carousel-slide.active:hover {
@@ -273,22 +268,14 @@
     border-color: #f7cfa2;
   }
   .activities-carousel .carousel-slide.prev {
-  left: calc(50% - 40vw);
-  transform: translateX(-50%);
-  opacity: 0.4;
-  z-index: 1;
-  filter: blur(1px) grayscale(10%) brightness(0.96);
-  background: linear-gradient(135deg, #f8faf8 60%, #e8f0e8 100%);
-  border: 1.5px solid #f7cfa2;
+  opacity: 0.6;
+  z-index: 2;
+  transform: scale(0.98);
   }
   .activities-carousel .carousel-slide.next {
-  left: calc(50% + 40vw);
-  transform: translateX(-50%);
-  opacity: 0.4;
-  z-index: 1;
-  filter: blur(1px) grayscale(10%) brightness(0.96);
-  background: linear-gradient(135deg, #f8faf8 60%, #e8f0e8 100%);
-  border: 1.5px solid #f7cfa2;
+  opacity: 0.6;
+  z-index: 2;
+  transform: scale(0.98);
   }
   .activities-carousel .carousel-slide h3 {
   font-size: 1.18rem;

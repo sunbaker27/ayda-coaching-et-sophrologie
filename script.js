@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const track = carousel.querySelector('.carousel-track');
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
             let current = 0;
+            // Ajout des indicateurs
+            let indicators = document.createElement('div');
+            indicators.className = 'carousel-indicators';
+            slides.forEach((_, i) => {
+                let dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    current = i;
+                    showSlide(current);
+                });
+                indicators.appendChild(dot);
+            });
+            carousel.appendChild(indicators);
 
             function showSlide(idx, direction) {
                 slides.forEach((slide, i) => {
@@ -14,12 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (i === idx) {
                         slide.classList.add('active');
                         if (direction === 'left') {
-                            slide.style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1)';
+                            slide.style.animation = 'swipeFadeZoom 0.5s cubic-bezier(.4,0,.2,1)';
                         } else if (direction === 'right') {
-                            slide.style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1) reverse';
+                            slide.style.animation = 'swipeFadeZoom 0.5s cubic-bezier(.4,0,.2,1) reverse';
                         }
                     }
                 });
+                // Met à jour les indicateurs
+                if (carousel.querySelector('.carousel-indicators')) {
+                    let dots = carousel.querySelectorAll('.carousel-indicators .dot');
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === idx);
+                    });
+                }
             }
 
             // Navigation tactile (swipe)
@@ -115,30 +135,73 @@ document.addEventListener('DOMContentLoaded', function() {
         const nextBtn = carousel.querySelector('.carousel-btn.next');
         let current = 0;
 
-        function showSlide(idx) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active', 'prev', 'next');
-                if (i === idx) {
-                    slide.classList.add('active');
-                } else if (i === (idx - 1 + slides.length) % slides.length) {
-                    slide.classList.add('prev');
-                } else if (i === (idx + 1) % slides.length) {
-                    slide.classList.add('next');
-                }
-            });
+        // New transform-based carousel for smoother animations
+        const slideWidth = slides[0] ? slides[0].getBoundingClientRect().width : 0;
+        let trackX = 0;
+        let animFrame = null;
+
+        function updateTrack() {
+            track.style.transform = `translate3d(${trackX}px,0,0)`;
+            animFrame = null;
         }
 
-        if (prevBtn && nextBtn && slides.length) {
-            prevBtn.addEventListener('click', function() {
-                current = (current - 1 + slides.length) % slides.length;
-                showSlide(current);
-            });
-            nextBtn.addEventListener('click', function() {
-                current = (current + 1) % slides.length;
-                showSlide(current);
-            });
-            showSlide(current);
+        function goToIndex(idx, animate = true) {
+            current = (idx + slides.length) % slides.length;
+            const offset = -current * (slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(slides[0]).marginRight || 0));
+            trackX = offset;
+            if (animFrame) cancelAnimationFrame(animFrame);
+            if (animate) {
+                track.style.transition = 'transform 0.35s cubic-bezier(.22,.9,.35,1)';
+            } else {
+                track.style.transition = 'none';
+            }
+            track.style.transform = `translate3d(${trackX}px,0,0)`;
+            // update active class for styles
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
         }
+
+        // Buttons
+        if (prevBtn) prevBtn.addEventListener('click', () => goToIndex(current - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goToIndex(current + 1));
+
+        // Touch drag
+        let startClientX = 0;
+        let lastClientX = 0;
+        let isDragging = false;
+
+        track.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            startClientX = e.touches[0].clientX;
+            lastClientX = startClientX;
+            isDragging = true;
+            track.style.transition = 'none';
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].clientX;
+            const dx = x - lastClientX;
+            lastClientX = x;
+            trackX += dx;
+            if (!animFrame) animFrame = requestAnimationFrame(updateTrack);
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const endX = lastClientX;
+            const delta = endX - startClientX;
+            // threshold
+            if (Math.abs(delta) > 40) {
+                if (delta < 0) goToIndex(current + 1);
+                else goToIndex(current - 1);
+            } else {
+                goToIndex(current);
+            }
+        });
+
+        // init
+        goToIndex(0, false);
     });
 });
 // ===== CARROUSEL OBJECTIFS SÉJOURS DÉSERT =====
