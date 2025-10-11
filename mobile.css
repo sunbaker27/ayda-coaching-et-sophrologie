@@ -220,7 +220,10 @@
 @media (max-width: 480px) {
   .activities-carousel.mobile-only {
   display: flex !important;
-  margin-bottom: 6rem !important;
+  margin-bottom: 2.4rem !important;
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.6rem !important;
+  overflow: hidden !important; /* viewport for transform-based carousel */
   }
 }
 @media (max-width: 480px) {
@@ -243,24 +246,25 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    /* Use native scroll-snap for robust snapping */
-    scroll-snap-type: x mandatory;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    gap: 0.6rem;
+    will-change: transform;
+    transition: transform 0.28s cubic-bezier(.22,.9,.35,1);
     touch-action: pan-y;
-    /* allow vertical expansion */
-    overflow-y: visible !important;
-    height: auto !important;
+    /* track will be translated via JS */
+    transform: translate3d(0,0,0);
+    /* allow a left/right padding so slides peek from edges on mobile */
+    padding-left: 6vw;
+    padding-right: 6vw;
   }
   .activities-carousel .carousel-slide {
     background: linear-gradient(135deg, #ffffff 88%, #f3f6f3 100%);
     border-radius: 14px;
     box-shadow: 0 6px 14px rgba(107,142,107,0.10);
     border: 1px solid rgba(168,181,168,0.6);
-    padding: 0.8rem 0.9rem;
+    padding: 0.9rem 0.9rem;
     margin: 0 0.45rem;
-    flex: 0 0 82%; /* slightly smaller for a tighter look */
-    max-width: 82%;
+    flex: 0 0 78%; /* slightly smaller for visible peek */
+    max-width: 78%;
     box-sizing: border-box;
     text-align: left;
     color: var(--text-dark);
@@ -268,11 +272,33 @@
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-    min-height: 150px;
+    min-height: 160px;
     display: block;
     transform: translateZ(0);
     will-change: transform, opacity;
-    scroll-snap-align: center;
+  }
+
+  /* Give a little more vertical room to avoid subtitle clipping */
+  .activities-carousel .carousel-slide {
+    min-height: 180px;
+  }
+
+  /* Indicators */
+  .activities-carousel .carousel-indicators {
+    display: flex;
+    gap: 0.45rem;
+    justify-content: center;
+    margin-top: 0.9rem;
+  }
+  .activities-carousel .carousel-indicators .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(107,142,107,0.25);
+  }
+  .activities-carousel .carousel-indicators .dot.active {
+    background: var(--primary-color);
+    box-shadow: 0 0 6px rgba(247,207,162,0.12);
   }
   .activities-carousel .carousel-slide.active {
     box-shadow: 0 8px 20px rgba(107,142,107,0.12);
@@ -289,7 +315,7 @@
   .activities-carousel .carousel-slide.active:active,
   .activities-carousel .carousel-slide.active:hover {
     box-shadow: 0 14px 36px rgba(107,142,107,0.18), 0 5px 24px rgba(247,207,162,0.15);
-    transform: translateX(-50%) scale(1.04);
+    transform: scale(1.04);
     border-color: #f7cfa2;
   }
   .activities-carousel .carousel-slide.prev {
