@@ -128,67 +128,159 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Reimagined activity carousel using CSS scroll-snap and a lightweight JS snap-on-scroll
+    // Fully reimagined, transform-based activity carousel with pointer support and momentum
     document.querySelectorAll('.activity-carousel').forEach(function(carousel) {
         const track = carousel.querySelector('.carousel-track');
         const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
-        const prevBtn = carousel.querySelector('.carousel-btn.prev');
-        const nextBtn = carousel.querySelector('.carousel-btn.next');
         if (!track || !slides.length) return;
 
-        // Ensure the track is scrollable horizontally (CSS handles most snapping)
-        // Add small JS to detect the centered slide after scrolling stops
-        let isScrolling;
+        // Create indicators
+        const indicators = document.createElement('div');
+        indicators.className = 'carousel-indicators';
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Aller à la diapositive ' + (i+1));
+            dot.addEventListener('click', () => goToIndex(i));
+            indicators.appendChild(dot);
+        });
+        carousel.appendChild(indicators);
 
-        function snapToCentered() {
-            const rect = track.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
+        // Metrics cache
+        let metrics = [];
+        function computeMetrics() {
+            metrics = slides.map(s => {
+                const rect = s.getBoundingClientRect();
+                const style = getComputedStyle(s);
+                const mr = parseFloat(style.marginRight) || 0;
+                const ml = parseFloat(style.marginLeft) || 0;
+                return { width: rect.width, full: rect.width + ml + mr };
+            });
+        }
+
+        // Track translate state
+        let trackX = 0;
+        let current = 0;
+        let raf = null;
+
+        function applyTransform(x, animate = true) {
+            if (animate) track.style.transition = 'transform 0.28s cubic-bezier(.22,.9,.35,1)';
+            else track.style.transition = 'none';
+            track.style.transform = `translate3d(${x}px,0,0)`;
+        }
+
+        function centerIndex(idx, animate = true) {
+            if (!metrics.length) computeMetrics();
+            const carouselW = carousel.getBoundingClientRect().width;
+            // compute cumulative start for index
+            let cumulative = 0;
+            for (let i=0;i<idx;i++) cumulative += metrics[i].full;
+            const chosenWidth = metrics[idx].full;
+            const centerOffset = (carouselW - chosenWidth)/2;
+            const offset = Math.round(centerOffset - cumulative);
+            trackX = offset;
+            current = idx;
+            applyTransform(trackX, animate);
+            updateIndicators();
+            slides.forEach((s,i)=> s.classList.toggle('active', i===current));
+        }
+
+        function updateIndicators() {
+            const dots = carousel.querySelectorAll('.carousel-indicators .dot');
+            dots.forEach((d,i)=> d.classList.toggle('active', i===current));
+        }
+
+        // Pointer/touch handling with rAF
+        let pointerActive = false;
+        let startX = 0;
+        let lastX = 0;
+        let vel = 0;
+        let lastTime = 0;
+
+        function onPointerDown(e) {
+            pointerActive = true;
+            startX = e.clientX || e.touches && e.touches[0].clientX;
+            lastX = startX;
+            lastTime = performance.now();
+            vel = 0;
+            track.style.transition = 'none';
+        }
+
+        function onPointerMove(e) {
+            if (!pointerActive) return;
+            const x = e.clientX || e.touches && e.touches[0].clientX;
+            const now = performance.now();
+            const dx = x - lastX;
+            const dt = Math.max(1, now - lastTime);
+            vel = dx / dt;
+            lastX = x;
+            lastTime = now;
+            trackX += dx;
+            if (!raf) raf = requestAnimationFrame(()=>{ applyTransform(trackX, false); raf = null; });
+        }
+
+        function onPointerUp(e) {
+            if (!pointerActive) return;
+            pointerActive = false;
+            // momentum
+            const flickV = vel * 1000; // px/s
+            const decel = 0.0009; // px/ms^2
+            const start = performance.now();
+            const baseX = trackX;
+
+            function momentum(now) {
+                const t = now - start;
+                const distance = flickV * t / 1000 - 0.5 * decel * t * t;
+                track.style.transition = 'none';
+                applyTransform(baseX + distance, false);
+                // stop when speed small or distance large
+                if (Math.abs(flickV) > 100 && Math.abs(distance) < 10000) {
+                    requestAnimationFrame(momentum);
+                } else {
+                    // snap to nearest
+                    snapToNearest();
+                }
+            }
+            requestAnimationFrame(momentum);
+        }
+
+        function snapToNearest() {
+            if (!metrics.length) computeMetrics();
+            const carouselW = carousel.getBoundingClientRect().width;
+            // find nearest by center distance
+            let cumulative = 0;
             let bestIdx = 0;
             let bestDist = Infinity;
-            slides.forEach((s, i) => {
-                const r = s.getBoundingClientRect();
-                const sCenter = r.left + r.width / 2;
-                const d = Math.abs(sCenter - centerX);
-                if (d < bestDist) {
-                    bestDist = d;
-                    bestIdx = i;
-                }
-            });
-            // Smoothly scroll so the chosen slide is centered
-            const chosen = slides[bestIdx];
-            const chosenRect = chosen.getBoundingClientRect();
-            const scrollLeft = track.scrollLeft + (chosenRect.left + chosenRect.width/2 - centerX);
-            track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-            // update active class
-            slides.forEach((s, i) => s.classList.toggle('active', i === bestIdx));
+            for (let i=0;i<metrics.length;i++) {
+                const center = -trackX + cumulative + metrics[i].full/2;
+                const dist = Math.abs(center - carouselW/2);
+                if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+                cumulative += metrics[i].full;
+            }
+            centerIndex(bestIdx, true);
         }
 
-        track.addEventListener('scroll', () => {
-            window.clearTimeout(isScrolling);
-            isScrolling = setTimeout(() => {
-                snapToCentered();
-            }, 90);
-        }, { passive: true });
+        // pointer events
+        track.addEventListener('pointerdown', onPointerDown, { passive: true });
+        window.addEventListener('pointermove', onPointerMove, { passive: true });
+        window.addEventListener('pointerup', onPointerUp, { passive: true });
+        // fallback touch events
+        track.addEventListener('touchstart', onPointerDown, { passive: true });
+        window.addEventListener('touchmove', onPointerMove, { passive: true });
+        window.addEventListener('touchend', onPointerUp, { passive: true });
 
-        // Buttons: find nearest previous/next slide and scroll to it
-        function goToIndex(i) {
-            const idx = (i + slides.length) % slides.length;
-            const s = slides[idx];
-            const rect = s.getBoundingClientRect();
-            const trackRect = track.getBoundingClientRect();
-            const scrollLeft = track.scrollLeft + (rect.left + rect.width/2 - (trackRect.left + trackRect.width/2));
-            track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-            slides.forEach((sl, j) => sl.classList.toggle('active', j === idx));
-        }
+        // keyboard support
+        carousel.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') centerIndex(current - 1);
+            if (e.key === 'ArrowRight') centerIndex(current + 1);
+        });
 
-        if (prevBtn) prevBtn.addEventListener('click', () => goToIndex(slides.findIndex(s => s.classList.contains('active')) - 1));
-        if (nextBtn) nextBtn.addEventListener('click', () => goToIndex(slides.findIndex(s => s.classList.contains('active')) + 1));
+        // resize
+        window.addEventListener('resize', () => { computeMetrics(); centerIndex(current, false); });
 
-        // Initial compute: mark first slide active and center it
-        slides.forEach((s, i) => s.classList.remove('active'));
-        slides[0].classList.add('active');
-        // center first slide on load (without smooth to avoid jank on some browsers)
-        setTimeout(() => snapToCentered(), 60);
+        // init
+        computeMetrics();
+        centerIndex(0, false);
     });
 });
 // ===== CARROUSEL OBJECTIFS SÉJOURS DÉSERT =====
