@@ -128,174 +128,67 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
+    // Reimagined activity carousel using CSS scroll-snap and a lightweight JS snap-on-scroll
     document.querySelectorAll('.activity-carousel').forEach(function(carousel) {
         const track = carousel.querySelector('.carousel-track');
         const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
         const prevBtn = carousel.querySelector('.carousel-btn.prev');
         const nextBtn = carousel.querySelector('.carousel-btn.next');
-        let current = 0;
+        if (!track || !slides.length) return;
 
-            // New transform-based carousel for smoother animations
-            let trackX = 0;
-            let animFrame = null;
+        // Ensure the track is scrollable horizontally (CSS handles most snapping)
+        // Add small JS to detect the centered slide after scrolling stops
+        let isScrolling;
 
-            function updateTrack() {
-                track.style.transform = `translate3d(${trackX}px,0,0)`;
-                animFrame = null;
-            }
-
-            // Cache metrics to avoid layout thrashing during touch
-            let slideMetrics = []; // { fullWidth, width, ml, mr, cumulativeStart, center }
-            let totalSlidesWidth = 0;
-
-            function computeMetrics() {
-                slideMetrics = [];
-                totalSlidesWidth = 0;
-                for (let i = 0; i < slides.length; i++) {
-                    const s = slides[i];
-                    const rect = s.getBoundingClientRect();
-                    const style = getComputedStyle(s);
-                    const ml = parseFloat(style.marginLeft) || 0;
-                    const mr = parseFloat(style.marginRight) || 0;
-                    const full = rect.width + ml + mr;
-                    const cumulativeStart = totalSlidesWidth;
-                    const center = cumulativeStart + full / 2;
-                    slideMetrics.push({ fullWidth: full, width: rect.width, ml, mr, cumulativeStart, center });
-                    totalSlidesWidth += full;
+        function snapToCentered() {
+            const rect = track.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            let bestIdx = 0;
+            let bestDist = Infinity;
+            slides.forEach((s, i) => {
+                const r = s.getBoundingClientRect();
+                const sCenter = r.left + r.width / 2;
+                const d = Math.abs(sCenter - centerX);
+                if (d < bestDist) {
+                    bestDist = d;
+                    bestIdx = i;
                 }
-            }
+            });
+            // Smoothly scroll so the chosen slide is centered
+            const chosen = slides[bestIdx];
+            const chosenRect = chosen.getBoundingClientRect();
+            const scrollLeft = track.scrollLeft + (chosenRect.left + chosenRect.width/2 - centerX);
+            track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            // update active class
+            slides.forEach((s, i) => s.classList.toggle('active', i === bestIdx));
+        }
 
-            function getSlideFullWidth(idx) {
-                if (!slideMetrics.length) computeMetrics();
-                return slideMetrics[idx] ? slideMetrics[idx].fullWidth : (slides[0] ? slides[0].getBoundingClientRect().width : 0);
-            }
-
-            function calcOffsetForIndex(idx) {
-                if (!slideMetrics.length) computeMetrics();
-                const carouselRect = carousel.getBoundingClientRect();
-                const slideW = slideMetrics[idx].fullWidth;
-                const centerOffset = (carouselRect.width - slideW) / 2;
-                // position is negative cumulativeStart plus centerOffset
-                return Math.round(centerOffset - slideMetrics[idx].cumulativeStart);
-            }
-
-            function snapToNearest() {
-                if (!slideMetrics.length) computeMetrics();
-                const carouselRect = carousel.getBoundingClientRect();
-                const viewportCenter = -trackX + carouselRect.width / 2;
-                // find closest by comparing precomputed centers
-                let bestIdx = 0;
-                let bestDist = Infinity;
-                for (let i = 0; i < slideMetrics.length; i++) {
-                    const dist = Math.abs(slideMetrics[i].center - viewportCenter);
-                    if (dist < bestDist) {
-                        bestDist = dist;
-                        bestIdx = i;
-                    }
-                }
-                goToIndex(bestIdx);
-            }
-
-            function goToIndex(idx, animate = true) {
-                current = (idx + slides.length) % slides.length;
-                const offset = calcOffsetForIndex(current);
-                trackX = offset;
-                if (animFrame) cancelAnimationFrame(animFrame);
-                if (animate) {
-                    track.style.transition = 'transform 0.28s cubic-bezier(.22,.9,.35,1)';
-                } else {
-                    track.style.transition = 'none';
-                }
-                track.style.transform = `translate3d(${trackX}px,0,0)`;
-                // update active class for styles
-                slides.forEach((s, i) => s.classList.toggle('active', i === current));
-            }
-
-        // Buttons
-        if (prevBtn) prevBtn.addEventListener('click', () => goToIndex(current - 1));
-        if (nextBtn) nextBtn.addEventListener('click', () => goToIndex(current + 1));
-
-        // Touch drag
-        let startClientX = 0;
-        let lastClientX = 0;
-        let lastTime = 0;
-        let isDragging = false;
-        let velocity = 0;
-
-        track.addEventListener('touchstart', (e) => {
-            if (e.touches.length !== 1) return;
-            startClientX = e.touches[0].clientX;
-            lastClientX = startClientX;
-            lastTime = performance.now();
-            isDragging = true;
-            velocity = 0;
-            track.style.transition = 'none';
+        track.addEventListener('scroll', () => {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {
+                snapToCentered();
+            }, 90);
         }, { passive: true });
 
-        track.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const x = e.touches[0].clientX;
-            const now = performance.now();
-            const dt = Math.max(1, now - lastTime);
-            const dx = x - lastClientX;
-            // velocity in px/ms
-            velocity = dx / dt;
-            lastClientX = x;
-            lastTime = now;
-            trackX += dx;
-            if (!animFrame) animFrame = requestAnimationFrame(updateTrack);
-        }, { passive: true });
+        // Buttons: find nearest previous/next slide and scroll to it
+        function goToIndex(i) {
+            const idx = (i + slides.length) % slides.length;
+            const s = slides[idx];
+            const rect = s.getBoundingClientRect();
+            const trackRect = track.getBoundingClientRect();
+            const scrollLeft = track.scrollLeft + (rect.left + rect.width/2 - (trackRect.left + trackRect.width/2));
+            track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            slides.forEach((sl, j) => sl.classList.toggle('active', j === idx));
+        }
 
-        track.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const endX = lastClientX;
-            const delta = endX - startClientX;
-            // If there was a flick (velocity), apply inertia
-            const flickThreshold = 0.02; // px per ms
-            if (Math.abs(velocity) > flickThreshold) {
-                // Apply momentum with simpler easing and then snap to center
-                const deceleration = 0.0006; // px per ms^2 (softer slowdown)
-                let v = velocity * 1000; // px/s
-                const start = performance.now();
-                const baseX = trackX;
+        if (prevBtn) prevBtn.addEventListener('click', () => goToIndex(slides.findIndex(s => s.classList.contains('active')) - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goToIndex(slides.findIndex(s => s.classList.contains('active')) + 1));
 
-                function momentumFrame(now) {
-                    const t = now - start;
-                    const distance = v * t / 1000 - 0.5 * deceleration * t * t;
-                    track.style.transition = 'none';
-                    track.style.transform = `translate3d(${baseX + distance}px,0,0)`;
-                    // stop condition: velocity falls below threshold
-                    if (Math.abs(v) > 0.4 && Math.abs(distance) < 10000) {
-                        requestAnimationFrame(momentumFrame);
-                    } else {
-                        // snap to nearest slide centered
-                        snapToNearest();
-                    }
-                }
-                requestAnimationFrame(momentumFrame);
-            } else {
-                // small movement -> change slide based on delta, else snap to nearest
-                if (Math.abs(delta) > 30) {
-                    if (delta < 0) goToIndex(current + 1);
-                    else goToIndex(current - 1);
-                } else {
-                    snapToNearest();
-                }
-            }
-        });
-
-        // handle resize to recalc slide widths
-        window.addEventListener('resize', () => {
-            // Recompute cached metrics and recalc track position based on current index
-            setTimeout(() => {
-                computeMetrics();
-                goToIndex(current, false);
-            }, 80);
-        });
-
-        // init
-        goToIndex(0, false);
+        // Initial compute: mark first slide active and center it
+        slides.forEach((s, i) => s.classList.remove('active'));
+        slides[0].classList.add('active');
+        // center first slide on load (without smooth to avoid jank on some browsers)
+        setTimeout(() => snapToCentered(), 60);
     });
 });
 // ===== CARROUSEL OBJECTIFS SÉJOURS DÉSERT =====
