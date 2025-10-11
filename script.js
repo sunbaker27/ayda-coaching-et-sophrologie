@@ -135,30 +135,65 @@ document.addEventListener('DOMContentLoaded', function() {
         const nextBtn = carousel.querySelector('.carousel-btn.next');
         let current = 0;
 
-        // New transform-based carousel for smoother animations
-        const slideWidth = slides[0] ? slides[0].getBoundingClientRect().width : 0;
-        let trackX = 0;
-        let animFrame = null;
+            // New transform-based carousel for smoother animations
+            let trackX = 0;
+            let animFrame = null;
 
-        function updateTrack() {
-            track.style.transform = `translate3d(${trackX}px,0,0)`;
-            animFrame = null;
-        }
-
-        function goToIndex(idx, animate = true) {
-            current = (idx + slides.length) % slides.length;
-            const offset = -current * (slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(slides[0]).marginRight || 0));
-            trackX = offset;
-            if (animFrame) cancelAnimationFrame(animFrame);
-            if (animate) {
-                track.style.transition = 'transform 0.35s cubic-bezier(.22,.9,.35,1)';
-            } else {
-                track.style.transition = 'none';
+            function updateTrack() {
+                track.style.transform = `translate3d(${trackX}px,0,0)`;
+                animFrame = null;
             }
-            track.style.transform = `translate3d(${trackX}px,0,0)`;
-            // update active class for styles
-            slides.forEach((s, i) => s.classList.toggle('active', i === current));
-        }
+
+            function getSlideFullWidth(idx) {
+                const s = slides[idx] || slides[0];
+                const rect = s.getBoundingClientRect();
+                const style = getComputedStyle(s);
+                const ml = parseFloat(style.marginLeft) || 0;
+                const mr = parseFloat(style.marginRight) || 0;
+                return rect.width + ml + mr;
+            }
+
+            function calcOffsetForIndex(idx) {
+                // center the slide inside the carousel viewport
+                const carouselRect = carousel.getBoundingClientRect();
+                const slideW = getSlideFullWidth(idx);
+                const centerOffset = (carouselRect.width - slideW) / 2;
+                return Math.round(centerOffset - idx * slideW);
+            }
+
+            function snapToNearest() {
+                // determine which slide's center is closest to the viewport center
+                const carouselRect = carousel.getBoundingClientRect();
+                const viewportCenter = -trackX + carouselRect.width / 2;
+                // compute cumulative positions
+                let cumulative = 0;
+                for (let i = 0; i < slides.length; i++) {
+                    const w = getSlideFullWidth(i);
+                    const slideCenter = cumulative + w / 2;
+                    if (Math.abs(slideCenter - viewportCenter) <= w / 2) {
+                        goToIndex(i);
+                        return;
+                    }
+                    cumulative += w;
+                }
+                // fallback: snap to current
+                goToIndex(current);
+            }
+
+            function goToIndex(idx, animate = true) {
+                current = (idx + slides.length) % slides.length;
+                const offset = calcOffsetForIndex(current);
+                trackX = offset;
+                if (animFrame) cancelAnimationFrame(animFrame);
+                if (animate) {
+                    track.style.transition = 'transform 0.35s cubic-bezier(.22,.9,.35,1)';
+                } else {
+                    track.style.transition = 'none';
+                }
+                track.style.transform = `translate3d(${trackX}px,0,0)`;
+                // update active class for styles
+                slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            }
 
         // Buttons
         if (prevBtn) prevBtn.addEventListener('click', () => goToIndex(current - 1));
@@ -203,38 +238,33 @@ document.addEventListener('DOMContentLoaded', function() {
             // If there was a flick (velocity), apply inertia
             const flickThreshold = 0.02; // px per ms
             if (Math.abs(velocity) > flickThreshold) {
-                // Apply momentum
-                const deceleration = 0.0008; // px per ms^2
+                // Apply momentum with simpler easing and then snap to center
+                const deceleration = 0.0009; // px per ms^2
                 let v = velocity * 1000; // px/s
-                const dir = v > 0 ? 1 : -1;
                 const start = performance.now();
+                const baseX = trackX;
 
                 function momentumFrame(now) {
                     const t = now - start;
-                    // distance = v0 * t - 0.5 * a * t^2
                     const distance = v * t / 1000 - 0.5 * deceleration * t * t;
                     track.style.transition = 'none';
-                    track.style.transform = `translate3d(${trackX + distance}px,0,0)`;
-                    // stop condition
-                    if (Math.abs(v) > 0.1 && Math.abs(distance) < 10000) {
+                    track.style.transform = `translate3d(${baseX + distance}px,0,0)`;
+                    // stop condition: velocity falls below threshold
+                    if (Math.abs(v) > 0.5 && Math.abs(distance) < 10000) {
                         requestAnimationFrame(momentumFrame);
                     } else {
-                        // snap to nearest
-                        // compute approximate index
-                        const slideW = slides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(slides[0]).marginRight || 0);
-                        const currentOffset = (trackX + distance);
-                        let idx = Math.round(Math.abs(currentOffset) / slideW);
-                        goToIndex(idx);
+                        // snap to nearest slide centered
+                        snapToNearest();
                     }
                 }
                 requestAnimationFrame(momentumFrame);
             } else {
-                // threshold
+                // small movement -> change slide based on delta, else snap to nearest
                 if (Math.abs(delta) > 40) {
                     if (delta < 0) goToIndex(current + 1);
                     else goToIndex(current - 1);
                 } else {
-                    goToIndex(current);
+                    snapToNearest();
                 }
             }
         });
