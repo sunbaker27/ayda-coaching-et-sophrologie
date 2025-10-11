@@ -7,32 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
             let current = 0;
 
-            // Create indicators (small dots) like destinations
-            let indicatorsActivities = document.createElement('div');
-            indicatorsActivities.className = 'carousel-indicators';
-            slides.forEach((_, i) => {
-                let dot = document.createElement('span');
-                dot.className = 'dot' + (i === 0 ? ' active' : '');
-                dot.addEventListener('click', () => {
-                    current = i;
-                    showSlide(current);
+            // Ajout des indicateurs (créés une seule fois)
+            if (!carousel.querySelector('.carousel-indicators')) {
+                const indicators = document.createElement('div');
+                indicators.className = 'carousel-indicators';
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.addEventListener('click', () => {
+                        current = i;
+                        showSlide(current);
+                    });
+                    indicators.appendChild(dot);
                 });
-                indicatorsActivities.appendChild(dot);
-            });
-            carousel.appendChild(indicatorsActivities);
-            // Ajout des indicateurs
-            let indicators = document.createElement('div');
-            indicators.className = 'carousel-indicators';
-            slides.forEach((_, i) => {
-                let dot = document.createElement('span');
-                dot.className = 'dot' + (i === 0 ? ' active' : '');
-                dot.addEventListener('click', () => {
-                    current = i;
-                    showSlide(current);
-                });
-                indicators.appendChild(dot);
-            });
-            carousel.appendChild(indicators);
+                carousel.appendChild(indicators);
+            }
 
             function showSlide(idx, direction) {
                 slides.forEach((slide, i) => {
