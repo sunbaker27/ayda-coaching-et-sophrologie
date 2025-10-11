@@ -72,72 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-// ===== CARROUSEL UNIQUE ACTIVITÉS SÉJOURS DÉSERT =====
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.matchMedia('(max-width: 480px)').matches) {
-        var carousel = document.querySelector('.activities-carousel');
-        if (carousel) {
-            const track = carousel.querySelector('.carousel-track');
-            const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
-            let current = 0;
-
-            function showSlide(idx, direction) {
-                slides.forEach((slide, i) => {
-                    slide.classList.remove('active', 'prev', 'next');
-                    if (i === idx) {
-                        slide.classList.add('active');
-                    } else if (i === (idx - 1 + slides.length) % slides.length) {
-                        slide.classList.add('prev');
-                    } else if (i === (idx + 1) % slides.length) {
-                        slide.classList.add('next');
-                    }
-                });
-                // Update indicators
-                if (carousel.querySelector('.carousel-indicators')) {
-                    let dots = carousel.querySelectorAll('.carousel-indicators .dot');
-                    dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
-                }
-                // Ajout d'une animation swipe
-                if (direction === 'left') {
-                    slides[idx].style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1)';
-                } else if (direction === 'right') {
-                    slides[idx].style.animation = 'swipeIn 0.5s cubic-bezier(.4,0,.2,1) reverse';
-                } else {
-                    slides[idx].style.animation = '';
-                }
-            }
-
-            // Navigation tactile (swipe)
-            let startX = null;
-            track.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 1) {
-                    startX = e.touches[0].clientX;
-                }
-            });
-            track.addEventListener('touchend', function(e) {
-                if (startX !== null && e.changedTouches.length === 1) {
-                    let endX = e.changedTouches[0].clientX;
-                    let deltaX = endX - startX;
-                    if (Math.abs(deltaX) > 40) {
-                        if (deltaX < 0) {
-                            current = (current + 1) % slides.length;
-                            showSlide(current, 'left');
-                        } else {
-                            current = (current - 1 + slides.length) % slides.length;
-                            showSlide(current, 'right');
-                        }
-                    }
-                    startX = null;
-                }
-            });
-            showSlide(current);
-        }
-    }
-});
+// (old simple activities carousel removed — replaced by the transform-based implementation below)
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
     // Fully reimagined, transform-based activity carousel with pointer support and momentum
-    document.querySelectorAll('.activity-carousel').forEach(function(carousel) {
+    document.querySelectorAll('.activities-carousel').forEach(function(carousel) {
         const track = carousel.querySelector('.carousel-track');
         const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
         if (!track || !slides.length) return;
