@@ -144,40 +144,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 animFrame = null;
             }
 
+            // Cache metrics to avoid layout thrashing during touch
+            let slideMetrics = []; // { fullWidth, width, ml, mr, cumulativeStart, center }
+            let totalSlidesWidth = 0;
+
+            function computeMetrics() {
+                slideMetrics = [];
+                totalSlidesWidth = 0;
+                for (let i = 0; i < slides.length; i++) {
+                    const s = slides[i];
+                    const rect = s.getBoundingClientRect();
+                    const style = getComputedStyle(s);
+                    const ml = parseFloat(style.marginLeft) || 0;
+                    const mr = parseFloat(style.marginRight) || 0;
+                    const full = rect.width + ml + mr;
+                    const cumulativeStart = totalSlidesWidth;
+                    const center = cumulativeStart + full / 2;
+                    slideMetrics.push({ fullWidth: full, width: rect.width, ml, mr, cumulativeStart, center });
+                    totalSlidesWidth += full;
+                }
+            }
+
             function getSlideFullWidth(idx) {
-                const s = slides[idx] || slides[0];
-                const rect = s.getBoundingClientRect();
-                const style = getComputedStyle(s);
-                const ml = parseFloat(style.marginLeft) || 0;
-                const mr = parseFloat(style.marginRight) || 0;
-                return rect.width + ml + mr;
+                if (!slideMetrics.length) computeMetrics();
+                return slideMetrics[idx] ? slideMetrics[idx].fullWidth : (slides[0] ? slides[0].getBoundingClientRect().width : 0);
             }
 
             function calcOffsetForIndex(idx) {
-                // center the slide inside the carousel viewport
+                if (!slideMetrics.length) computeMetrics();
                 const carouselRect = carousel.getBoundingClientRect();
-                const slideW = getSlideFullWidth(idx);
+                const slideW = slideMetrics[idx].fullWidth;
                 const centerOffset = (carouselRect.width - slideW) / 2;
-                return Math.round(centerOffset - idx * slideW);
+                // position is negative cumulativeStart plus centerOffset
+                return Math.round(centerOffset - slideMetrics[idx].cumulativeStart);
             }
 
             function snapToNearest() {
-                // determine which slide's center is closest to the viewport center
+                if (!slideMetrics.length) computeMetrics();
                 const carouselRect = carousel.getBoundingClientRect();
                 const viewportCenter = -trackX + carouselRect.width / 2;
-                // compute cumulative positions
-                let cumulative = 0;
-                for (let i = 0; i < slides.length; i++) {
-                    const w = getSlideFullWidth(i);
-                    const slideCenter = cumulative + w / 2;
-                    if (Math.abs(slideCenter - viewportCenter) <= w / 2) {
-                        goToIndex(i);
-                        return;
+                // find closest by comparing precomputed centers
+                let bestIdx = 0;
+                let bestDist = Infinity;
+                for (let i = 0; i < slideMetrics.length; i++) {
+                    const dist = Math.abs(slideMetrics[i].center - viewportCenter);
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        bestIdx = i;
                     }
-                    cumulative += w;
                 }
-                // fallback: snap to current
-                goToIndex(current);
+                goToIndex(bestIdx);
             }
 
             function goToIndex(idx, animate = true) {
@@ -271,8 +287,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // handle resize to recalc slide widths
         window.addEventListener('resize', () => {
-            // Recalculate track position based on current index
-            setTimeout(() => goToIndex(current, false), 80);
+            // Recompute cached metrics and recalc track position based on current index
+            setTimeout(() => {
+                computeMetrics();
+                goToIndex(current, false);
+            }, 80);
         });
 
         // init
