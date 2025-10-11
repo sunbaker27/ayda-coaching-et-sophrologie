@@ -240,12 +240,9 @@
   .activities-carousel .carousel-track {
     position: relative;
     width: 100%;
-    position: relative;
-    width: 100%;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    will-change: transform;
     /* Use native scroll-snap for robust snapping */
     scroll-snap-type: x mandatory;
     overflow-x: auto;
@@ -254,15 +251,16 @@
     /* allow vertical expansion */
     overflow-y: visible !important;
     height: auto !important;
+  }
+  .activities-carousel .carousel-slide {
     background: linear-gradient(135deg, #ffffff 88%, #f3f6f3 100%);
     border-radius: 14px;
     box-shadow: 0 6px 14px rgba(107,142,107,0.10);
     border: 1px solid rgba(168,181,168,0.6);
     padding: 0.8rem 0.9rem;
-  margin: 0 0.45rem;
-  flex: 0 0 82%; /* slightly smaller for a tighter look */
-  max-width: 82%;
-  scroll-snap-align: center;
+    margin: 0 0.45rem;
+    flex: 0 0 82%; /* slightly smaller for a tighter look */
+    max-width: 82%;
     box-sizing: border-box;
     text-align: left;
     color: var(--text-dark);
@@ -270,10 +268,11 @@
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-  min-height: 0; /* allow content to determine height */
+    min-height: 150px;
     display: block;
     transform: translateZ(0);
     will-change: transform, opacity;
+    scroll-snap-align: center;
   }
   .activities-carousel .carousel-slide.active {
     box-shadow: 0 8px 20px rgba(107,142,107,0.12);
