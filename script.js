@@ -75,160 +75,75 @@ document.addEventListener('DOMContentLoaded', function() {
 // (old simple activities carousel removed — replaced by the transform-based implementation below)
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Fully reimagined, transform-based activity carousel with pointer support and momentum
-    document.querySelectorAll('.activities-carousel').forEach(function(carousel) {
-        const track = carousel.querySelector('.carousel-track');
-        const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
-        if (!track || !slides.length) return;
+    if (!window.matchMedia('(max-width: 480px)').matches) return;
+    const carousel = document.querySelector('.activities-carousel');
+    if (!carousel) return;
+    const track = carousel.querySelector('.carousel-track');
+    const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
+    if (!slides.length) return;
 
-        // Create indicators
+    // Create indicators if missing
+    if (!carousel.querySelector('.carousel-indicators')) {
         const indicators = document.createElement('div');
         indicators.className = 'carousel-indicators';
         slides.forEach((_, i) => {
-            const dot = document.createElement('button');
+            const dot = document.createElement('span');
             dot.className = 'dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', 'Aller à la diapositive ' + (i+1));
-            dot.addEventListener('click', () => goToIndex(i));
+            dot.addEventListener('click', () => { showSlide(i); });
             indicators.appendChild(dot);
         });
         carousel.appendChild(indicators);
+    }
 
-        // Metrics cache
-        let metrics = [];
-        function computeMetrics() {
-            metrics = slides.map(s => {
-                const rect = s.getBoundingClientRect();
-                const style = getComputedStyle(s);
-                const mr = parseFloat(style.marginRight) || 0;
-                const ml = parseFloat(style.marginLeft) || 0;
-                return { width: rect.width, full: rect.width + ml + mr };
-            });
-        }
+    let current = 0;
 
-        // Track translate state
-        let trackX = 0;
-        let current = 0;
-        let raf = null;
-
-        function applyTransform(x, animate = true) {
-            if (animate) track.style.transition = 'transform 0.28s cubic-bezier(.22,.9,.35,1)';
-            else track.style.transition = 'none';
-            track.style.transform = `translate3d(${x}px,0,0)`;
-        }
-
-        function centerIndex(idx, animate = true) {
-            if (!metrics.length) computeMetrics();
-            const carouselW = carousel.getBoundingClientRect().width;
-            // compute cumulative start for index
-            let cumulative = 0;
-            for (let i=0;i<idx;i++) cumulative += metrics[i].full;
-            const chosenWidth = metrics[idx].full;
-            const centerOffset = (carouselW - chosenWidth)/2;
-            const offset = Math.round(centerOffset - cumulative);
-            trackX = offset;
-            current = idx;
-            applyTransform(trackX, animate);
-            updateIndicators();
-            slides.forEach((s,i)=> s.classList.toggle('active', i===current));
-        }
-
-        function updateIndicators() {
-            const dots = carousel.querySelectorAll('.carousel-indicators .dot');
-            dots.forEach((d,i)=> d.classList.toggle('active', i===current));
-        }
-
-        // Pointer/touch handling with rAF
-        let pointerActive = false;
-        let startX = 0;
-        let lastX = 0;
-        let vel = 0;
-        let lastTime = 0;
-
-        function onPointerDown(e) {
-            pointerActive = true;
-            startX = e.clientX || e.touches && e.touches[0].clientX;
-            lastX = startX;
-            lastTime = performance.now();
-            vel = 0;
-            track.style.transition = 'none';
-        }
-
-        function onPointerMove(e) {
-            if (!pointerActive) return;
-            const x = e.clientX || e.touches && e.touches[0].clientX;
-            const now = performance.now();
-            const dx = x - lastX;
-            const dt = Math.max(1, now - lastTime);
-            vel = dx / dt;
-            lastX = x;
-            lastTime = now;
-            trackX += dx;
-            if (!raf) raf = requestAnimationFrame(()=>{ applyTransform(trackX, false); raf = null; });
-        }
-
-        function onPointerUp(e) {
-            if (!pointerActive) return;
-            pointerActive = false;
-            // momentum
-            const flickV = vel * 1000; // px/s
-            const decel = 0.0009; // px/ms^2
-            const start = performance.now();
-            const baseX = trackX;
-
-            function momentum(now) {
-                const t = now - start;
-                const distance = flickV * t / 1000 - 0.5 * decel * t * t;
-                track.style.transition = 'none';
-                applyTransform(baseX + distance, false);
-                // stop when speed small or distance large
-                if (Math.abs(flickV) > 100 && Math.abs(distance) < 10000) {
-                    requestAnimationFrame(momentum);
-                } else {
-                    // snap to nearest
-                    snapToNearest();
-                }
-            }
-            requestAnimationFrame(momentum);
-        }
-
-        function snapToNearest() {
-            if (!metrics.length) computeMetrics();
-            const carouselW = carousel.getBoundingClientRect().width;
-            // find nearest by center distance
-            let cumulative = 0;
-            let bestIdx = 0;
-            let bestDist = Infinity;
-            for (let i=0;i<metrics.length;i++) {
-                const center = -trackX + cumulative + metrics[i].full/2;
-                const dist = Math.abs(center - carouselW/2);
-                if (dist < bestDist) { bestDist = dist; bestIdx = i; }
-                cumulative += metrics[i].full;
-            }
-            centerIndex(bestIdx, true);
-        }
-
-        // pointer events
-        track.addEventListener('pointerdown', onPointerDown, { passive: true });
-        window.addEventListener('pointermove', onPointerMove, { passive: true });
-        window.addEventListener('pointerup', onPointerUp, { passive: true });
-        // fallback touch events
-        track.addEventListener('touchstart', onPointerDown, { passive: true });
-        window.addEventListener('touchmove', onPointerMove, { passive: true });
-        window.addEventListener('touchend', onPointerUp, { passive: true });
-
-        // keyboard support
-        carousel.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') centerIndex(current - 1);
-            if (e.key === 'ArrowRight') centerIndex(current + 1);
+    function showSlide(idx) {
+        idx = (idx + slides.length) % slides.length;
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === idx);
+            s.classList.toggle('prev', i === (idx - 1 + slides.length) % slides.length);
+            s.classList.toggle('next', i === (idx + 1) % slides.length);
         });
+        const dots = carousel.querySelectorAll('.carousel-indicators .dot');
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 
-        // resize
-        window.addEventListener('resize', () => { computeMetrics(); centerIndex(current, false); });
+        // Center the chosen slide by translating the track
+        const trackRect = track.getBoundingClientRect();
+        const slideRect = slides[idx].getBoundingClientRect();
+        const offset = Math.round((trackRect.width / 2) - (slideRect.left - trackRect.left) - (slideRect.width / 2));
+        track.style.transition = 'transform 0.28s cubic-bezier(.22,.9,.35,1)';
+        track.style.transform = `translate3d(${offset}px,0,0)`;
 
-        // init
-        computeMetrics();
-        centerIndex(0, false);
+        current = idx;
+    }
+
+    // Simple touch swipe (no momentum)
+    let startX = null;
+    track.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) startX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+        if (startX === null) return;
+        const endX = e.changedTouches[0].clientX;
+        const dx = endX - startX;
+        if (Math.abs(dx) > 40) {
+            if (dx < 0) showSlide(current + 1);
+            else showSlide(current - 1);
+        }
+        startX = null;
+    }, { passive: true });
+
+    // Keyboard support
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') showSlide(current - 1);
+        if (e.key === 'ArrowRight') showSlide(current + 1);
     });
+
+    // Update on resize to re-center
+    window.addEventListener('resize', () => { showSlide(current); });
+
+    // Initialize
+    showSlide(0);
 });
 // ===== CARROUSEL OBJECTIFS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
