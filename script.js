@@ -76,8 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== CARROUSEL ACTIVITÉS SÉJOURS DÉSERT =====
 document.addEventListener('DOMContentLoaded', function() {
     if (!window.matchMedia('(max-width: 480px)').matches) return;
-    const carousel = document.querySelector('.activities-carousel');
+    const carousel = document.querySelector('.activities-carousel.mobile-only');
     if (!carousel) return;
+    // Accessibility: mark region and make focusable (mobile only)
+    if (!carousel.hasAttribute('role')) carousel.setAttribute('role', 'region');
+    if (!carousel.hasAttribute('aria-label')) carousel.setAttribute('aria-label', 'Carrousel Activités');
+    if (!carousel.hasAttribute('tabindex')) carousel.tabIndex = 0;
     const track = carousel.querySelector('.carousel-track');
     const slides = track ? Array.from(track.querySelectorAll('.carousel-slide')) : [];
     if (!slides.length) return;
@@ -87,9 +91,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const indicators = document.createElement('div');
         indicators.className = 'carousel-indicators';
         slides.forEach((_, i) => {
-            const dot = document.createElement('span');
+            const dot = document.createElement('button');
+            dot.type = 'button';
             dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Aller à la diapositive ' + (i+1));
+            if (i === 0) dot.setAttribute('aria-current', 'true');
             dot.addEventListener('click', () => { showSlide(i); });
+            dot.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                    e.preventDefault();
+                    showSlide(i);
+                }
+            });
             indicators.appendChild(dot);
         });
         carousel.appendChild(indicators);
@@ -105,7 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
             s.classList.toggle('next', i === (idx + 1) % slides.length);
         });
         const dots = carousel.querySelectorAll('.carousel-indicators .dot');
-        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        dots.forEach((d, i) => {
+            d.classList.toggle('active', i === idx);
+            if (i === idx) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
 
         // Center the chosen slide by translating the track
         const trackRect = track.getBoundingClientRect();
